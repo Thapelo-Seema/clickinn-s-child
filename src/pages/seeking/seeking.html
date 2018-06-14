@@ -1,0 +1,40 @@
+<!--
+  Generated template for the SeekingPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar color="clickinn">
+    <ion-title style="font-family: 'Ubuntu', sans-serif;">Results</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+	<div style="height: 100%" *ngIf="!showList && dataLoaded">
+		<clickinn-maps [pointOfInterest]="pointOfInterest" [search]="search_object"></clickinn-maps>
+	</div>
+	<div *ngIf="!dataLoaded" class="centered_on_screen">
+	    <ion-spinner name="ios"></ion-spinner>
+	</div>
+	<div *ngIf="showList && dataLoaded" style="height: 100%">
+		<ion-item no-lines padding style="background: #000010; color: #3A86B7" text-wrap>
+			<h1 text-center>Best Matched Apartment!</h1>
+			<p text-center padding style="color: whitesmoke">This is the apartment recommended by our expert software, based on the information you gave us.</p>
+			<accommodations [apartment]="bestMatch" (click)="gotoApartment(bestMatch)"></accommodations>
+		</ion-item>
+		<button *ngIf="!more" ion-button clear (click)="toggleMore()">show more</button>
+		<button *ngIf="more" ion-button clear (click)="toggleMore()">show less</button>
+		<ion-item padding text-center *ngIf="more" no-lines text-wrap>
+			<h1 text-center>More Apartments</h1>
+			<p padding>This is an ordered list of more apartments from more recommended to least</p>
+			<accommodations *ngFor="let apartment of apartments" (click)="gotoApartment(apartment)" [apartment]="apartment">
+			</accommodations>
+		</ion-item>
+	</div>
+	<ion-fab bottom right *ngIf="showList">
+		<button ion-fab icon-only (click)="toggleList()"><ion-icon name="map" end></ion-icon></button>
+	</ion-fab>
+	<ion-fab bottom right *ngIf="!showList">
+		<button ion-fab icon-only (click)="toggleList()"><ion-icon name="list" end></ion-icon></button>
+	</ion-fab>
+</ion-content>

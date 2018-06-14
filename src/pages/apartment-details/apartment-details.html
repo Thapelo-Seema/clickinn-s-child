@@ -1,0 +1,13 @@
+<div>
+	<ion-fab end>
+		<button ion-fab icon-only color="clickinn" (click)="gotoHome()">
+			<ion-icon name="arrow-left"></ion-icon>
+		</button>
+	</ion-fab>
+	<ion-tabs color="clickinn">
+		<ion-tab [root]="tab1Root" tabTitle="Details" tabIcon="information-circle" [rootParams]="apartment"></ion-tab>
+		<ion-tab [root]="tab2Root" tabTitle="Appointment" tabIcon="alarm" [rootParams]="apartment"></ion-tab>
+		<ion-tab [root]="tab3Root" tabTitle="Secure" tabIcon="lock" [rootParams]="apartment"></ion-tab>
+	</ion-tabs>
+</div>
+	

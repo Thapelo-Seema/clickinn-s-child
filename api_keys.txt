@@ -1,0 +1,9 @@
+android gm api key AIzaSyAzCjZ7IxVJV9nOWduzbMS0w0nOswluMQw
+ios gm api key AIzaSyB_zXe744FAOuNeD6uBsfcI1fwSgu61Ho0
+
+finalise search and apartment results retrieval
+customize map display to show custom icons and infoWindows that display details about apartments
+marker clustering
+result statistics
+
+paygate developer Be_the_change7

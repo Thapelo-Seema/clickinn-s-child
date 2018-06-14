@@ -1,0 +1,56 @@
+// http://ionicframework.com/docs/theming/
+
+
+// App Global Sass
+// --------------------------------------------------
+// Put style rules here that you want to apply globally. These
+// styles are for the entire app and not just one component.
+// Additionally, this file can be also used as an entry point
+// to import other Sass files to be included in the output CSS.
+//
+// Shared Sass variables, which can be used to adjust Ionic's
+// default Sass variables, belong in "theme/variables.scss".
+//
+// To declare rules for a specific mode, create a child rule
+// for the .md, .ios, or .wp mode classes. The mode class is
+// automatically applied to the <body> element in the app.
+.raleway{
+	font-family: 'Raleway', sans-serif;
+}
+
+.clickinn-bg{
+	background: #000010;
+}
+
+.centered_on_screen{
+	position: fixed;
+ 	top: 50%;
+  	left: 50%;
+  	transform: translate(-50%, -50%);
+}
+
+.full_width{
+	width: 90%;
+}
+
+.toast_margins{
+	position: fixed;
+	left: 50%;
+	top: 10%;
+	transform: translateX(-50%);
+	text-align: center;
+	padding: 15px;
+}
+
+.alertCtrl{
+	text-align: center;
+}
+
+.alert-title{
+	text-align: center;
+}
+
+.alert-sub-title{
+	text-align: center;
+	color: #32db64;
+}

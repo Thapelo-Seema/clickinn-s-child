@@ -1,0 +1,8 @@
+ionic cordova build android --prod --release
+
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore C:\Users\Metalojiq\apps\clickinn\platforms\android\app\build\outputs\apk\release\app-release-unsigned.apk clickinn
+
+nuclear7 nuclear7
+
+C:\Users\Metalojiq\AppData\Local\Android\Sdk\build-tools\27.0.3>
+zipalign -v 4 C:\Users\Metalojiq\apps\clickinn\platforms\android\app\build\outputs\apk\release\app-release-unsigned.apk clickinn.apk
