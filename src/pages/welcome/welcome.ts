@@ -2,7 +2,6 @@ import { Component} from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform, ToastController } from 'ionic-angular';
 import { MapsProvider } from '../../providers/maps/maps';
 import { Address } from '../../models/location/address.interface';
-import { AngularFirestore } from 'angularfire2/firestore';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { LocalDataProvider } from '../../providers/local-data/local-data';
 import { User } from '../../models/users/user.interface';
@@ -121,6 +120,7 @@ export class WelcomePage {
   }
 
   returnFirst(input: string): string{
+    if(input == undefined) return '';
     return input.split(" ")[0];
   }
 

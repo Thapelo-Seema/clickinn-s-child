@@ -4,7 +4,8 @@ import { Search } from '../../models/search.interface';
 import { Apartment } from '../../models/properties/apartment.interface';
 import { Address } from '../../models/location/address.interface';
 import { Seeker } from '../../models/users/seeker.interface';
-import { User } from '../../models/users/user.interface'
+import { User } from '../../models/users/user.interface';
+import { Duration } from '../../models/location/duration.interface';
 
 @Injectable()
 export class LocalDataProvider {
@@ -13,7 +14,7 @@ export class LocalDataProvider {
    
   }
 
-  setSearch(search: Search):Promise<any>{
+  setSearch(search: Search):Promise<Search>{
   	return this.storage.set('search_object', search)
   }
 
@@ -21,31 +22,31 @@ export class LocalDataProvider {
   	return this.storage.get('search_object')
   }
 
-  setUser(user: User){
+  setUser(user: User):Promise<User>{
     return this.storage.set('user', user);
   }
 
-  getUser(){
+  getUser():Promise<User>{
     return this.storage.get('user');
   }
 
-  removeUser(){
+  removeUser():Promise<void>{
     return this.storage.remove('user');
   }
 
-  setSeeker(seeker: Seeker){
+  setSeeker(seeker: Seeker):Promise<Seeker>{
     return this.storage.set('seeker', seeker);
   }
 
-  getSeeker(){
+  getSeeker():Promise<Seeker>{
     return this.storage.get('seeker');
   }
 
-  removeSeeker(){
+  removeSeeker():Promise<void>{
     return this.storage.remove('seeker');
   }
 
-  setApartment(apartment: Apartment):Promise<any>{
+  setApartment(apartment: Apartment):Promise<Apartment>{
   	return this.storage.set('aoi', apartment);
   }
 
@@ -53,7 +54,7 @@ export class LocalDataProvider {
   	return this.storage.get('aoi');
   }
 
-  setPOI(poi: Address):Promise<any>{
+  setPOI(poi: Address):Promise<Address>{
   	return this.storage.set('poi', poi);
   }
 
@@ -61,11 +62,11 @@ export class LocalDataProvider {
   	return this.storage.get('poi');
   }
 
-  setWalkingDuration(duration: any):Promise<any>{
+  setWalkingDuration(duration: Duration):Promise<Duration>{
     return this.storage.set('walkingDuration', duration);
   }
 
-  getWalkingDuration():Promise<any>{
+  getWalkingDuration():Promise<Duration>{
     return this.storage.get('walkingDuration');
   }
 

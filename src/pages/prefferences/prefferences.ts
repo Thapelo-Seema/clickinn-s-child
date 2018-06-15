@@ -4,8 +4,7 @@ import { Address } from '../../models/location/address.interface';
 import { Search } from '../../models/search.interface';
 import { LocalDataProvider } from '../../providers/local-data/local-data';
 import { AngularFirestore } from 'angularfire2/firestore';
-import { AngularFireAuth } from 'angularfire2/auth';
-//import { PaymentsProvider } from '../../providers/payments/payments'
+//import { AngularFireAuth } from 'angularfire2/auth';
 
 /**
  * Generated class for the PrefferencesPage page.
@@ -40,9 +39,6 @@ export class PrefferencesPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private alert: ModalController,  
   	private storage: LocalDataProvider, private afs: AngularFirestore, private toast: ToastController) {
   	this.storage.getPOI().then(data => this.pointOfInterest = data).catch(err => this.handleError(err)) ;
-  }
-
-  ionViewDidLoad(){
   }
 
 

@@ -4,9 +4,8 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { Duration } from '../../models/location/duration.interface';
 import { Address } from '../../models/location/address.interface';
 import { MarkerOptions } from '../../models/markeroptions.interface';
-import { AngularFireDatabase} from 'angularfire2/database';
 import { LatLngCoordinates } from '../../models/location/latlng.interface';
-import { Observable } from 'rxjs';
+//import { Observable } from 'rxjs';
 import { Apartment } from '../../models/properties/apartment.interface';
 import { App } from 'ionic-angular';
 import { LocalDataProvider } from '../../providers/local-data/local-data';
@@ -26,7 +25,7 @@ declare var MarkerClusterer: any;
 @Injectable()
 export class MapsProvider {
 
-constructor(public geo: Geolocation, private db: AngularFireDatabase, 
+constructor(public geo: Geolocation, 
   private storage: LocalDataProvider, public appCtrl: App){
 }
 
@@ -378,9 +377,6 @@ displayPlaceDetails(poi: Address, place: Address){
 
 }
 
-getAccommodationAddresses(): Observable<Address[]>{
-  return this.db.list<Address>('AccomsDummy2').valueChanges()
-}
 /*Clusters markers based on the zoom level*/
 ClusterMarkers(map, markers){
 	return new MarkerClusterer(map, markers, {
