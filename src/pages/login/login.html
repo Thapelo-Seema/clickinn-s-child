@@ -25,14 +25,16 @@
 	  			Accommodation re-imagined !
 	  		</h2>
 	  	</ion-item>
-		<ion-item padding style="background: transparent; color: white">
-			<ion-label stacked>email</ion-label>
-			<ion-input type="email" [(ngModel)]="seeker.email" ></ion-input>
-		</ion-item>
-		<ion-item padding style="background: transparent; color: white">
-			<ion-label stacked>password</ion-label>
-			<ion-input type="password" [(ngModel)]="password" ></ion-input>
-		</ion-item>
+	  	<form>
+			<ion-item padding style="background: transparent; color: white">
+				<ion-label stacked>email</ion-label>
+				<ion-input type="email" [(ngModel)]="seeker.email" name="email" ></ion-input>
+			</ion-item>
+			<ion-item padding style="background: transparent; color: white">
+				<ion-label stacked>password</ion-label>
+				<ion-input type="password" [(ngModel)]="password" name="pword"></ion-input>
+			</ion-item>
+		</form>
 	  	<ion-buttons >
 	  		<button ion-button color="secondary" (click)="signin()">Sign In</button>
 	  		<button ion-button clear (click)="signup()">Create An Account</button>

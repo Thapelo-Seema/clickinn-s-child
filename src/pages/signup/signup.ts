@@ -49,15 +49,15 @@ export class SignupPage {
     this.loading = true;
     this.afAuth.auth.createUserWithEmailAndPassword(this.seeker.email, this.password)
     .then(data =>{
-      alert('signed in!')
-      this.seeker.uid = data.uid;
+      //alert('signed in!')
+      this.seeker.uid = data.user.uid;
       this.seeker.displayName = this.seeker.firstname + ' ' + this.seeker.lastname;
     })
     .then(() =>{
-      alert('storing!');
-      alert(this.seeker.uid);
+     //alert('storing!');
+      //alert(this.seeker.uid);
       if(this.seeker.uid !== ''){
-        alert('persisting user...');
+        //alert('persisting user...');
         this.persistUser();
       }
       else{
@@ -98,11 +98,11 @@ export class SignupPage {
     if(this.seeker.uid !== ''){
       this.afs.collection('Users').doc(this.seeker.uid).set(this.seeker)
       .then(() =>{
-          alert('stored in collection!');
+          //alert('stored in collection!');
           this.storage.setUser(this.seeker).then(() =>{
-            alert('local storage!');
+           // alert('local storage!');
             this.navCtrl.setRoot('WelcomePage').then(() =>{
-              alert('navigated');
+              //alert('navigated');
               this.loading = false;
             }).catch(err =>{
             this.handleError(err);

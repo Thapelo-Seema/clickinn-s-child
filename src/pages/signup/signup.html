@@ -26,24 +26,24 @@
   			Hello there, sign up below and click into your new place !
   		</h1>
   	</ion-item>
-  	<ion-list margin-top margin-bottom>
+  	<form margin-top margin-bottom>
   		<ion-item padding style="background: transparent; color: white">
   			<ion-label stacked>First Name</ion-label>
-  			<ion-input type="text" [(ngModel)]="seeker.firstname" ></ion-input>
+  			<ion-input type="text" [(ngModel)]="seeker.firstname" name="fname"></ion-input>
   		</ion-item>
       <ion-item padding style="background: transparent; color: white">
         <ion-label stacked>Last Name</ion-label>
-        <ion-input type="text" [(ngModel)]="seeker.lastname" ></ion-input>
+        <ion-input type="text" [(ngModel)]="seeker.lastname" name="lname"></ion-input>
       </ion-item>
   		<ion-item padding style="background: transparent; color: white">
   			<ion-label stacked>email</ion-label>
-  			<ion-input type="email" [(ngModel)]="seeker.email" ></ion-input>
+  			<ion-input type="email" [(ngModel)]="seeker.email" name="email"></ion-input>
   		</ion-item>
   		<ion-item no-lines padding style="background: transparent; color: white">
   			<ion-label stacked>password</ion-label>
-  			<ion-input type="password" [(ngModel)]="password" ></ion-input>
+  			<ion-input type="password" [(ngModel)]="password" name="pword"></ion-input>
   		</ion-item>
-  	</ion-list>
+  	</form>
   	<ion-buttons>
   		<button ion-button color="secondary" (click)="signup()">sign up</button>
   		<button ion-button clear (click)="signin()">have an account ?</button>

@@ -59,24 +59,12 @@ export class LoginPage {
   signin(){
   	this.loading = true;
   	this.afAuth.auth.signInWithEmailAndPassword(this.seeker.email, this.password).then(firebaseUser =>{
-  		this.afs.collection('Users').doc<User>(`${firebaseUser.uid}`).valueChanges().subscribe(data =>{
-        console.log(data);
-  			this.seeker = {
-  				email: data.email,
-  				firstname: data.displayName,
-          displayName: data.displayName,
-  				lastname: data.lastname,
-  				phoneNumber: data.phoneNumber,
-  				uid: data.uid,
-          is_host: data.is_host,
-          user_type: data.user_type,
-          fcm_token: data.fcm_token,
-          photoURL: data.photoURL,
-          status: data.status,
-          threads: data.threads
-        }
+      //console.log('firebaseUser: ', firebaseUser);
+  		this.afs.collection('Users').doc<User>(`${firebaseUser.user.uid}`).valueChanges().subscribe(data =>{
+        //console.log('ClickinnUser: ', data);
+  			this.seeker = data;
   			this.storage.setUser(this.seeker).then(() =>{
-          console.log('CurrentUser: ', this.seeker)
+          //console.log('CurrentUser: ', this.seeker)
   				this.navCtrl.setRoot('WelcomePage').then(() => this.loading = false);
   			}).catch(err => this.handleError(err))
   		}, err =>{
