@@ -18,9 +18,7 @@ export class ApartmentDetailsPage{
   }
 
   gotoHome(){
-    this.navCtrl.popToRoot().then(value =>{
-      this.navCtrl.setRoot('PrefferencesPage');
-    })
+    this.navCtrl.pop();
   }
   
 }

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, ToastController, } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 import { LocalDataProvider } from '../../providers/local-data/local-data';
 import { User } from '../../models/users/user.interface';
+import { AngularFirestore } from 'angularfire2/firestore';
 /**
  * Generated class for the ProfilePage page.
  *
@@ -21,15 +22,19 @@ export class ProfilePage {
   loading: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private storage: LocalDataProvider,
-  	private toast: ToastController, private platform: Platform){
-    this.loading = true;
-  	this.platform.ready().then(() =>{
+  	private toast: ToastController, private afs: AngularFirestore){
+      this.loading = true;
   		this.storage.getUser().then(data =>{
-	  		this.user = data;
-        if(user.photoURL !== '') this.image = user.photoURL;
-        this.loading = false;
+        this.afs.collection('Users').doc<User>(data.uid).valueChanges().subscribe(user =>{
+          this.user = user;
+          if(this.user.photoURL !== '') this.image = this.user.photoURL;
+          this.loading = false;
+        },
+        err =>{
+          this.handleError(err)
+        })
 	  	}).catch(err => this.handleError(err))
-  	}).catch(err => this.handleError(err))
+  	
   }
 
   handleError(err){

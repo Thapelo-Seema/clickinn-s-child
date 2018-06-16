@@ -31,34 +31,4 @@
 		</ion-buttons>
 	</div>
 </ion-content>
-<ion-menu [content]="content">
-  <ion-item text-wrap no-lines style="background: #000030; color: white">
-    <ion-avatar item-left>
-      <img src="assets/imgs/MyselfMale.png" class="round"/>
-    </ion-avatar>
-    <h1 text-center>
-        {{user? user?.displayName: 'Loading...'}}
-    </h1>
-    <p text-center style="color: white">{{user? user?.email: 'Loading...'}}</p>
-    <p text-center style="color: white">{{user? user?.phoneNumber: ''}}</p>
-  </ion-item>
-	<ion-list padding>
-      <button ion-item menuClose (click)="gotoProfile()">
-        <ion-icon name="ios-contact-outline" item-end></ion-icon>
-       Profile
-      </button>
-      <button ion-item>
-        <ion-icon name="ios-stopwatch-outline" item-end></ion-icon>
-        Appointments
-      </button>
-      <button ion-item color="secondary">
-        <ion-icon name="ios-cloud-upload-outline" item-end></ion-icon>
-        Upload &amp; Earn
-      </button>
-      <button ion-item (click)="logout()">
-        Logout
-        <ion-icon name="ios-power-outline" item-end></ion-icon>
-      </button>
-  </ion-list>
-</ion-menu>
-<ion-nav id="nav" #content [root]="WelcomePage"></ion-nav>
+

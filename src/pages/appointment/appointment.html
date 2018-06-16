@@ -29,14 +29,14 @@
 		    {{apartment?.property?.vicinity}}
 		</p>
 	</ion-item>
-	<ion-item margin-bottom text-wrap text-center (click)="makeAppointment()">
+	<ion-item margin-bottom text-wrap text-center (click)="showDatePicker()">
 		<h2>Appointment Date</h2>
 		<p style="color: #488aff">
 		    {{myDate ? myDate : 'Select appointment date'}}
 		</p>
 	</ion-item>
 	<ion-buttons end>
-		<button *ngIf="myDate" ion-button full margin-vertical padding (click)="makeAppointment()">Change appointment</button>
+		<button *ngIf="myDate" ion-button full margin-vertical padding (click)="showDatePicker()">Change appointment</button>
 		<button ion-button bottom-right color="secondary" (click)="book()">
 			Confirm&nbsp;&nbsp; <ion-icon  end name="checkmark"></ion-icon>
 		</button>

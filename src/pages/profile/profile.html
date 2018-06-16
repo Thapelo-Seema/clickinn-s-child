@@ -10,8 +10,7 @@
   </ion-navbar>
 </ion-header>
 <ion-content>
-
-	<ion-item no-lines style="background: #000030; color: white">
+	<ion-item no-lines style="background: #000050; color: white">
 		<ion-buttons end>
 	  		<button ion-button style="background: #000010; color: white" (click)="gotoEdit()" >
 	  			<ion-icon name="ios-create" start></ion-icon> &nbsp;&nbsp; Edit</button>
@@ -20,30 +19,34 @@
 			<img src="{{image}}" class="round" alt="User display picture" />
 		</div>
 		<h1 text-center>	
-	  		{{user ? user.firstname: ''}} {{user ? user.lastname: ''}}
-	  	</h1>
-	</ion-item>  	
-  	<ion-list>
+	  		{{user?.displayName}} 
+	  </h1>
+	</ion-item>
+ 	
+  	<ion-list padding>
+      <ion-item>
+        <h2>Display Name</h2>
+        <p>{{user?.displayName ? user?.displayName: 'none provided'}}</p>
+      </ion-item>
   		<ion-item>
   			<h2>Firstname</h2>
-  			<p text-center>{{user ? user.firstname: 'none provided'}}</p>
+  			<p>{{user?.firstname ? user?.firstname: 'none provided'}}</p>
   		</ion-item>
   		<ion-item>
   			<h2>Lastname</h2>
-  			<p text-center>{{user ? user.lastname: 'none provided'}}</p>
+  			<p>{{user?.lastname ? user?.lastname: 'none provided'}}</p>
   		</ion-item>
   		<ion-item>
   			<h2>Email</h2>
-  			<p text-center>{{user ? user.email: 'none provided'}}</p>
+  			<p>{{user?.email ? user?.email: 'none provided'}}</p>
   		</ion-item>
   		<ion-item>
   			<h2>Phone</h2>
-  			<p text-center>{{user ? user.phoneNumber: 'none provided'}}</p>
+  			<p>{{user?.phoneNumber ? user?.phoneNumber: 'none provided'}}</p>
   		</ion-item>
   		<ion-item>
   			<h2>User role</h2>
-  			<p text-center>{{user ? user.user_type: 'none provided'}}</p>
+  			<p>{{user?.user_type ? user?.user_type: 'none provided'}}</p>
   		</ion-item>
   	</ion-list>
-		
 </ion-content>

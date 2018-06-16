@@ -4,6 +4,10 @@ import { Apartment } from '../../models/properties/apartment.interface';
 import { DatePicker } from '@ionic-native/date-picker';
 import { Calendar } from '@ionic-native/calendar';
 import { LocalDataProvider } from '../../providers/local-data/local-data';
+import { AngularFirestore } from 'angularfire2/firestore';
+//import { AngularFireAuth } from 'angularfire2/auth';
+import { Appointment } from '../../models/appointment.interface';
+import { User } from '../../models/users/user.interface';
 
 
 @IonicPage()
@@ -27,17 +31,50 @@ export class AppointmentPage {
   }
   myDate: Date = null;
   loading: boolean = false;
+  appointment: Appointment = {
+    booker_id: '',
+    prop_id: '',
+    apart_id: '',
+    date: null,
+    timeStamp: 0,
+    host_id: ''
+  }
+  user: User = {
+      email: '',
+      firstname: '',
+      lastname: '',
+      displayName: '',
+      is_host: false,
+      user_type: 'seeker',
+      uid: '',
+      fcm_token: '',
+      phoneNumber: '',
+      photoURL: '',
+      status: false,
+      threads: {}
+    };
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private datePicker: DatePicker, 
   	private calender: Calendar, private confirmtCtrl: ModalController, private storage: LocalDataProvider,
-    private toast: ToastController){	
+    private toast: ToastController, private afs: AngularFirestore){	
+
+    this.loading = true;
+    this.storage.getApartment().then(data =>{
+      this.afs.collection("Apartments").doc<Apartment>(data.apart_id).valueChanges().subscribe(apartment =>{
+        this.storage.getUser().then(data => this.user = data).then(() =>{
+          this.apartment = apartment;
+          this.loading = false;
+        })
+      },
+      err =>{
+        this.handleError(err);
+      })
+      
+    }).catch(err => this.handleError(err));
   }
 
-  ionViewWillLoad(){
-    this.storage.getApartment().then(data => this.apartment = data).catch(err => this.handleError(err));
-  }
-
-  book(){
+  book(){ 
+    this.loading = true;
   	this.promptConfirmation();
   }
 
@@ -50,7 +87,30 @@ export class AppointmentPage {
     warningModal.present();
     warningModal.onDidDismiss(data =>{
       //This is whwre you persist or cancel the appointment on the database
+      if(data == true){
+        this.createCalenderEvent();
+        this.updateAppointmentVals();
+        this.afs.collection('Viewings').add(this.appointment).then(data =>{
+            this.toast.create({
+                message: "Appointment successfully created",
+                showCloseButton: true,
+                  closeButtonText: 'Ok',
+                  position: 'top',
+                  cssClass: 'toast_margins full_width'
+            }).present()
+            this.loading = false;
+        }).catch(err => this.handleError(err))
+      }
     })
+  }
+
+  updateAppointmentVals(){
+    this.appointment.prop_id = this.apartment.prop_id;
+    this.appointment.apart_id = this.apartment.apart_id;
+    this.appointment.booker_id = this.user.uid;
+    this.appointment.host_id = this.apartment.property.user_id;
+    this.appointment.date = this.myDate;
+    this.appointment.timeStamp = Date.now();
   }
 
   showDatePicker(): Promise<void>{

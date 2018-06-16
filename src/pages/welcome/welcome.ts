@@ -1,8 +1,9 @@
 import { Component} from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, Platform, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, ToastController } from 'ionic-angular';
 import { MapsProvider } from '../../providers/maps/maps';
 import { Address } from '../../models/location/address.interface';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFirestore } from 'angularfire2/firestore';
 import { LocalDataProvider } from '../../providers/local-data/local-data';
 import { User } from '../../models/users/user.interface';
 @IonicPage()
@@ -24,19 +25,22 @@ export class WelcomePage {
   loading: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private storage: LocalDataProvider,
-  private map_svc: MapsProvider, private alert: ModalController, private afAuth: AngularFireAuth, private platform: Platform,
-  private toast: ToastController){
+  private map_svc: MapsProvider, private alert: ModalController, private afAuth: AngularFireAuth, 
+  private toast: ToastController, private afs: AngularFirestore){
     this.loading = true;
-    this.platform.ready().then(() =>{
-      this.storage.getUser().then(data =>{
-        this.user = data;
-        this.loading = false;
+    this.storage.getUser().then(data =>{
+        this.afs.collection('Users').doc<User>(data.uid).valueChanges().subscribe(user =>{
+          this.user = user;
+          this.loading = false;
+        }, 
+        err =>{
+          this.handleError(err)
+        })
+        
       }).catch(err =>{
         this.handleError(err);
-      })
-    }).catch(err =>{
-      this.handleError(err);
     })
+    
     
   }
 
@@ -92,13 +96,7 @@ export class WelcomePage {
     warningModal.present();
   }
 
-  logout(){
-    this.storage.removeUser().then(() => {
-      this.navCtrl.setRoot('LoginPage').then(()=>{
-        this.afAuth.auth.signOut();
-      })
-    });
-  }
+  
 
   handleError(err){
     console.log(err.message);
@@ -112,12 +110,7 @@ export class WelcomePage {
     }).present()
   }
 
-  gotoProfile(){
-    this.loading = true;
-    this.navCtrl.push('ProfilePage').then(() =>{
-      this.loading = false;
-    });
-  }
+  
 
   returnFirst(input: string): string{
     if(input == undefined) return '';
