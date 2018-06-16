@@ -8,6 +8,7 @@ export interface User{
 	is_host: boolean;
 	phoneNumber?: string;
 	photoURL?: string;
+	rating?: string;
 	status?: boolean;
 	threads?: any;
 	uid: string;

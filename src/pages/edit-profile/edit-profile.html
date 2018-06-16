@@ -1,0 +1,51 @@
+<!--
+  Generated template for the EditProfilePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>edit-profile</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+	<ion-item no-lines padding style="background: #000030; color: white">
+		<ion-buttons end>
+	  		<button ion-button style="background: #000010; color: white"><ion-icon name="image"></ion-icon></button>
+	  	</ion-buttons>
+		<div text-center>
+			<img src="{{image}}" class="round" alt="User display picture" />
+		</div>
+		<h1 text-center>	
+	  		{{user ? user.firstname: ''}} {{user ? user.lastname: ''}}
+	  	</h1>
+	</ion-item>  	
+  	<ion-list>
+  		<ion-item padding>
+  			<ion-label stacked>Firstname</ion-label>
+			<ion-input type="text" [(ngModel)]="user.firstname" name="fname" autocomplete="given-name" autocorrect="off"></ion-input>
+  		</ion-item>
+  		<ion-item padding>
+  			<ion-label stacked>Lastname</ion-label>
+			<ion-input type="text" [(ngModel)]="user.lastname" name="lname" autocomplete="family-name" autocorrect="off"></ion-input>
+  		</ion-item>
+  		<ion-item padding>
+  			<ion-label stacked>Email</ion-label>
+			<ion-input type="email" [(ngModel)]="user.email" name="email" autocomplete="email" autocorrect="off"></ion-input>
+  		</ion-item>
+  		<ion-item padding>
+  			<ion-label stacked>Phone number</ion-label>
+	  		<ion-input type="number" [(ngModel)]="user.phoneNumber"></ion-input>
+  		</ion-item>
+  	</ion-list>
+  	<ion-buttons end padding>
+  		<button ion-button><ion-icon name="cloud-upload" start></ion-icon> &nbsp;&nbsp; Save</button>
+  	</ion-buttons>
+		
+</ion-content>
