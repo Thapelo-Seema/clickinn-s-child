@@ -31,10 +31,11 @@
 				<ion-input type="password" [(ngModel)]="password" name="pword"></ion-input>
 			</ion-item>
 		</form>
-	  	<ion-buttons >
+	  	<ion-buttons>
 	  		<button ion-button color="secondary" (click)="signin()">Login</button>
 	  		<button ion-button clear (click)="signup()">Create An Account</button>
 	  	</ion-buttons>
+	  	<button ion-button clear color="danger">Forgot password</button>
 	</div>
 	<div *ngIf="loading" class="centered_on_screen">
 		<ion-spinner name="ios"></ion-spinner>

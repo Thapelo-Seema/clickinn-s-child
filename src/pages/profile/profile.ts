@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { LocalDataProvider } from '../../providers/local-data/local-data';
 import { User } from '../../models/users/user.interface';
 import { AngularFirestore } from 'angularfire2/firestore';
+import { ErrorHandlerProvider } from '../../providers/error-handler/error-handler';
 /**
  * Generated class for the ProfilePage page.
  *
@@ -22,7 +23,7 @@ export class ProfilePage {
   loading: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private storage: LocalDataProvider,
-  	private toast: ToastController, private afs: AngularFirestore){
+  	 private afs: AngularFirestore, private errHandler: ErrorHandlerProvider){
       this.loading = true;
   		this.storage.getUser().then(data =>{
         this.afs.collection('Users').doc<User>(data.uid).valueChanges().subscribe(user =>{
@@ -31,22 +32,15 @@ export class ProfilePage {
           this.loading = false;
         },
         err =>{
-          this.handleError(err)
+          this.errHandler.handleError(err);
+          this.loading = false
         })
-	  	}).catch(err => this.handleError(err))
-  	
-  }
-
-  handleError(err){
-    console.log(err.message);
+	  	})
+      .catch(err => {
+      this.errHandler.handleError(err);
       this.loading = false;
-      this.toast.create({
-        message: err.message,
-        showCloseButton: true,
-          closeButtonText: 'Ok',
-          position: 'top',
-          cssClass: 'toast_margins full_width'
-    }).present()
+    })
+  	
   }
 
   gotoEdit(){

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import { ErrorHandlerProvider } from '../../providers/error-handler/error-handler';
 /**
  * Generated class for the VirtualViewingPage page.
  *

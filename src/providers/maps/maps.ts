@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ElementRef } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation';
-import { Duration } from '../../models/location/duration.interface';
 import { Address } from '../../models/location/address.interface';
 import { MarkerOptions } from '../../models/markeroptions.interface';
 import { LatLngCoordinates } from '../../models/location/latlng.interface';
@@ -31,7 +30,7 @@ constructor(public geo: Geolocation,
 
 /*gets the walking duration between two points/places given their *Address* objects and returns a promise of a *Duration* object
 using the google maps api with its Distance Matrix Service*/
-  getWalkingDuration(originObject: Address, destinationObect: Address): Promise<Duration>{
+ /* getWalkingDuration(originObject: Address, destinationObect: Address): Promise<Duration>{
     var originLatLng = new google.maps.LatLng(originObject.lat, originObject.lng)
     var originStr = originObject.description
     var destinationLatLng = new google.maps.LatLng(destinationObect.lat, destinationObect.lng)
@@ -60,7 +59,7 @@ using the google maps api with its Distance Matrix Service*/
 	    });
     })
     return durationPromise;
-  }
+  }*/
 /*This function returns an Address Promise given a places lat lng, for the case when the native geolocation service 
 just returns the coordintes of a place and we need the details of the place
 */
@@ -177,7 +176,7 @@ geoGoder(address: string):Promise<Address>{
       streetViewControl: false
   	}
   	var map = new Promise<any>((resolve, reject) =>{
-  		resolve(new google.maps.Map(mapRef.nativeElement, options)); 
+  		resolve(new google.maps.Map(mapRef.nativeElement, options, {passive: true})); 
   	})
   	return map;
   }
@@ -194,7 +193,7 @@ geoGoder(address: string):Promise<Address>{
         color: 'black',
         fontSize: '8px',
         fontWeight: 'bold'
-    }: null });
+    }: null }, {passive: true});
   }
 /*Returns the LatLng coordinates of the current location of a device(needs some accuracy tweaking)*/
   getCurrentLocation(): Promise<LatLngCoordinates>{
@@ -290,56 +289,20 @@ place service*/
     return this.getPlaceById(place.place_id)
   }
 /*Initialises and returns markers with click listeners that reveal information about each place*/
-addMarkersWithClickListeners(places: Address[], poi: Address, map: any): Array<any>{
- /* const poiLocation = new google.maps.LatLng(poi.lat, poi.lng);
-  const poiOptions: MarkerOptions = {position: poiLocation, map,}
-  this.addMarker()*/
-  if(places.length > 0){
-    return places.map(place => {
-    const location = new google.maps.LatLng(place.lat, place.lng);
-    const markerOptions: MarkerOptions = 
-    { position: location, 
-      map: map, 
-      title: place.description, 
-      icon: {url: 'assets/imgs/png/price_tag.png'} 
-    }
-    var marker = this.addMarker(markerOptions, 5000);
-    marker.addListener('click', () =>{
-      this.getWalkingDuration(poi, place).then(duration => {
-        var card = '<div id="content">' +
-                   '<p> This place is <b><em>' + duration.text + 
-                   '</em></b> away </p></div>'
-        var infoWindow = new google.maps.InfoWindow({
-          content: card
-        })
-        infoWindow.open(map, marker);
-      }).then(()=>{
-
-      })
-    });
-    return marker;
-  })
-  }else return [] ;
-}
-
 addApartmentMarkersWithClickListeners(places: Apartment[], poi: Address, map: any): Array<any>{
-  /*const poiLocation = new google.maps.LatLng(poi.lat, poi.lng);
-  const poiOptions: MarkerOptions = {position: poiLocation, map,}
-  this.addMarker()*/
+  let markerClusterer = new MarkerClusterer(map, []);
   if(places.length > 0){
-    var flightPlanCoordinates = [
+    var lineCoordinates = [
           {lat: places[0].property.address.lat, lng: places[0].property.address.lng},
           {lat: poi.lat, lng: poi.lng}
         ];
-        var flightPath = new google.maps.Polyline({
-          path: flightPlanCoordinates,
+        var line = new google.maps.Polyline({
+          path: lineCoordinates,
           geodesic: true,
           strokeColor: '#3A86B7',
           strokeOpacity: 1.0,
           strokeWeight: 15
-        });
-
-        
+        }); 
     return places.map(place => {
     const location = new google.maps.LatLng(place.property.lat, place.property.lng);
     const markerOptions: MarkerOptions = 
@@ -349,15 +312,13 @@ addApartmentMarkersWithClickListeners(places: Apartment[], poi: Address, map: an
       title: place.description, 
       icon: {url: 'assets/imgs/png/price_tag.png'} 
     }
-    var marker = this.addMarker(markerOptions, place.price)
+    var marker = this.addMarker(markerOptions, place.price);
+    markerClusterer.addMarker(marker);
     marker.addListener('click', () =>{
-      this.getWalkingDuration(poi, place.property.address).then(duration => {
-        this.storage.setWalkingDuration(duration).then(data => this.gotoApartment(place).catch(err => console.log(err)))
-        .catch(err => console.log(err))
-        
-      })
-    });
-    flightPath.setMap(map);
+      this.gotoApartment(place);
+    },
+    {passive: true});
+    line.setMap(map);
     return marker;
   })
   }else return [] ;

@@ -8,6 +8,7 @@ import { AngularFirestore } from 'angularfire2/firestore';
 //import { AngularFireAuth } from 'angularfire2/auth';
 import { Appointment } from '../../models/appointment.interface';
 import { User } from '../../models/users/user.interface';
+import { ErrorHandlerProvider } from '../../providers/error-handler/error-handler';
 
 
 @IonicPage()
@@ -37,7 +38,10 @@ export class AppointmentPage {
     apart_id: '',
     date: null,
     timeStamp: 0,
-    host_id: ''
+    host_id: '',
+    host_confirms: false,
+    host_declines: false,
+    seeker_cancels: false
   }
   user: User = {
       email: '',
@@ -56,8 +60,7 @@ export class AppointmentPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private datePicker: DatePicker, 
   	private calender: Calendar, private confirmtCtrl: ModalController, private storage: LocalDataProvider,
-    private toast: ToastController, private afs: AngularFirestore){	
-
+    private toast: ToastController, private afs: AngularFirestore, private errHandler: ErrorHandlerProvider){	
     this.loading = true;
     this.storage.getApartment().then(data =>{
       this.afs.collection("Apartments").doc<Apartment>(data.apart_id).valueChanges().subscribe(apartment =>{
@@ -67,10 +70,14 @@ export class AppointmentPage {
         })
       },
       err =>{
-        this.handleError(err);
+        this.errHandler.handleError(err);
+        this.loading = false;
       })
       
-    }).catch(err => this.handleError(err));
+    }).catch(err => {
+      this.errHandler.handleError(err);
+      this.loading = false;
+    });
   }
 
   book(){ 
@@ -95,11 +102,14 @@ export class AppointmentPage {
                 message: "Appointment successfully created",
                 showCloseButton: true,
                   closeButtonText: 'Ok',
-                  position: 'top',
+                  position: 'middle',
                   cssClass: 'toast_margins full_width'
             }).present()
             this.loading = false;
-        }).catch(err => this.handleError(err))
+        }).catch(err => {
+          this.errHandler.handleError(err);
+          this.loading = false;
+        })
       }
     })
   }
@@ -118,52 +128,57 @@ export class AppointmentPage {
 	  date: new Date(),
 	  mode: 'datetime',
 	  androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
-	}).then(
-	  date => {
-	  	console.log('Got date: ', date);
-	  	this.myDate = date;
-	  }
-	).catch(err => this.handleError(err));
+	  })
+    .then(date => {
+	  	  this.myDate = date;
+	  })
+    .catch(err => {
+          this.errHandler.handleError(err);
+          this.loading = false;
+    })
   }
 
   createCalenderEvent(){
   	this.calender.hasReadWritePermission().then(permission =>{
-  		this.calender.createEvent('Clickinn Viewing Appointment', 
-  		this.apartment.property.vicinity,
-  		`You requested to view the ${this.apartment.room_type} at ${this.apartment.property.address.description}, the owner of this apartment will be expecting you.`,
-  		new Date(), this.myDate
+  		this.calender.createEventWithOptions(
+        'Clickinn Viewing Appointment', 
+  		  this.apartment.property.address.sublocality_lng,
+  		  `You requested to view the ${this.apartment.room_type} at ${this.apartment.property.address.description}.`,
+  		  new Date(), 
+        this.myDate,
+        {firstReminderMinutes: 120}
   		)
   	},
   	denied =>{
   		this.calender.requestReadWritePermission().then(approved =>{
-  			 this.calender.createEvent('Clickinn Viewing Appointment', 
-	  		this.apartment.property.vicinity,
-	  		`You requested to view the ${this.apartment.room_type} at ${this.apartment.property.address.description}, the owner of this apartment will be expecting you.`,
-	  		new Date(), this.myDate
+  			this.calender.createEventWithOptions(
+          'Clickinn Viewing Appointment', 
+	  		  this.apartment.property.address.sublocality_lng,
+	  		  `You requested to view the ${this.apartment.room_type} at ${this.apartment.property.address.description}.`,
+	  		  new Date(), 
+          this.myDate,
+          {firstReminderMinutes: 120}
 	  		)
   		},
   		err =>{
-  			this.handleError(err);
+  			this.errHandler.handleError(err);
+        this.loading = false;
   		})
-  	}).catch(err => this.handleError(err))
+  	})
+    .catch(err => {
+          this.errHandler.handleError(err);
+          this.loading = false;
+    })
   }
 
   makeAppointment(){
   	this.showDatePicker().then(() => {
       if(this.myDate) this.createCalenderEvent();
-    }).catch(err => this.handleError(err))
-  }
-
-  handleError(err){
-    console.log(err.message);
-      this.loading = true;
-      this.toast.create({
-        message: err.message,
-        showCloseButton: true,
-          closeButtonText: 'Ok',
-          position: 'top',
-          cssClass: 'toast_margins full_width'
-    }).present()
+    })
+    .catch(err => {
+      this.errHandler.handleError(err);
+      this.loading = false;
+    })
   }
 
 }

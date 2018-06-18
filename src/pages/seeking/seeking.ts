@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { Address } from '../../models/location/address.interface';
 import { Apartment } from '../../models/properties/apartment.interface';
 import { AccommodationsProvider } from '../../providers/accommodations/accommodations';
 import { Search } from '../../models/search.interface';
 import { LocalDataProvider } from '../../providers/local-data/local-data';
+import { ErrorHandlerProvider } from '../../providers/error-handler/error-handler';
+
 
 @IonicPage()
 @Component({
@@ -24,7 +26,8 @@ export class SeekingPage {
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private accom_svc: AccommodationsProvider,
-   private alertCtrl: AlertController, private storage: LocalDataProvider, private toast: ToastController){ 
+   private alertCtrl: AlertController, private storage: LocalDataProvider,
+   private errHandler: ErrorHandlerProvider){ 
     this.storage.getPOI().then(data =>{
       this.pointOfInterest = data;
     })
@@ -36,9 +39,15 @@ export class SeekingPage {
       }).then(() =>{
         this.getApartments(this.search_object);
       })
-      .catch(err => this.handleError(err));
+      .catch(err => {
+        this.errHandler.handleError(err);
+        this.dataLoaded = true;
+      })
     })
-    .catch(err => this.handleError(err))	
+    .catch(err => {
+      this.errHandler.handleError(err);
+      this.dataLoaded = true;
+    })	
   }
 
   getApartments(obj: Search){
@@ -68,12 +77,17 @@ export class SeekingPage {
       }
     },
     err =>{
-      this.handleError(err);
+      this.errHandler.handleError(err);
+      this.dataLoaded = true;
     })
 	}
 
 	gotoApartment(apartment: Apartment){
-    this.storage.setApartment(apartment).then(data => this.navCtrl.push('ApartmentDetailsPage')).catch(err => this.handleError(err));
+    this.storage.setApartment(apartment).then(data => this.navCtrl.push('ApartmentDetailsPage'))
+    .catch(err => {
+      this.errHandler.handleError(err);
+      this.dataLoaded = true;
+    });
   }
 
   toggleList(){
@@ -107,18 +121,6 @@ export class SeekingPage {
 
   toggleMore(){
     this.more = !this.more;
-  }
-
-  handleError(err){
-    console.log(err.message);
-      this.dataLoaded = true;
-      this.toast.create({
-        message: err.message,
-        showCloseButton: true,
-          closeButtonText: 'Ok',
-          position: 'top',
-          cssClass: 'toast_margins full_width'
-    }).present()
   }
 
 }

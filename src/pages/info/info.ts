@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Apartment } from '../../models/properties/apartment.interface';
 import { LocalDataProvider } from '../../providers/local-data/local-data';
 import { Image } from '../../models/image.interface';
 import { AccommodationsProvider } from '../../providers/accommodations/accommodations';
 import { Duration } from '../../models/location/duration.interface';
 import { Address } from '../../models/location/address.interface';
+import { ErrorHandlerProvider } from '../../providers/error-handler/error-handler';
 
 /**
  * Generated class for the InfoPage page.
@@ -45,7 +46,7 @@ export class InfoPage {
   images: Image[] = [];
   loading: boolean = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, private storage: LocalDataProvider, 
-  	private accom_svc: AccommodationsProvider, private toast: ToastController) {
+  	private accom_svc: AccommodationsProvider, private errHandler: ErrorHandlerProvider) {
     this.images = [
       {name: 'placeholder', path: 'path', progress: 0,url: "assets/imgs/placeholder.jpg"},
       {name: 'placeholder', path: 'path', progress: 0,url: "assets/imgs/placeholder.jpg"},
@@ -58,38 +59,29 @@ export class InfoPage {
   ionViewWillLoad(){
     this.storage.getPOI().then(data => {
       this.pointOfInterest = data;
-      console.log('Description: ' + this.pointOfInterest.description + '\n' + 'Name: ' + this.pointOfInterest.name)
-    }).catch(err => this.handleError(err));
-
-    this.storage.getWalkingDuration().then(data => {
-      console.log(data);
-      this.walkingDuration = data;
-      this.adjustedDuration = (Math.floor(this.walkingDuration.value/60));
-      if(this.adjustedDuration >= 10) this.adjustedDuration -= 3; 
-    }).catch(err => this.handleError(err));
+      //console.log('Description: ' + this.pointOfInterest.description + '\n' + 'Name: ' + this.pointOfInterest.name)
+    })
+    .catch(err => {
+      this.errHandler.handleError(err);
+      this.loading = false;
+    })
   	this.storage.getApartment().then(data => {
       this.apartment = data;
+      if(this.apartment.property.nearbys == undefined || this.apartment.property.nearbys == null || 
+        this.apartment.property.nearbys.length == 0 ){
+        this.apartment.property.nearbys = [];
+      }
       this.images = [];
       this.images = Object.keys(data.images).map(imageId =>{
         return data.images[imageId]
       })
-      console.log(this.images);
-      /*this.apartment.images = pics;
-  		this.images = pics;*/
-  	}).catch(err => this.handleError(err));
+  	})
+    .catch(err => {
+      this.errHandler.handleError(err);
+      this.loading = false;
+    })
   	
  }
 
- handleError(err){
-    console.log(err.message);
-      this.loading = true;
-      this.toast.create({
-        message: err.message,
-        showCloseButton: true,
-          closeButtonText: 'Ok',
-          position: 'top',
-          cssClass: 'toast_margins full_width'
-    }).present()
-  }
 
 }

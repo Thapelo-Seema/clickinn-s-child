@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { LocalDataProvider } from '../../providers/local-data/local-data';
 import { User } from '../../models/users/user.interface'
-
+import { ErrorHandlerProvider } from '../../providers/error-handler/error-handler';
 /**
  * Generated class for the SignupPage page.
  *
@@ -23,8 +23,9 @@ export class SignupPage {
 	password: string;
   loading: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private toast: ToastController,
-    private afs: AngularFirestore, private afAuth: AngularFireAuth, private storage: LocalDataProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+    private afs: AngularFirestore, private afAuth: AngularFireAuth, private storage: LocalDataProvider,
+     private errHandler: ErrorHandlerProvider) {
   	this.seeker = {
       email: '',
       displayName: '',
@@ -39,10 +40,6 @@ export class SignupPage {
       status: false,
       threads: {}
     }
-  }
-
-  ionViewDidLoad() {
-    
   }
 
   signup(){
@@ -72,7 +69,8 @@ export class SignupPage {
       }
     })
     .catch(err => {
-      this.handleError(err);
+      this.errHandler.handleError(err);
+      this.loading = false;
     })
 
   	
@@ -80,18 +78,6 @@ export class SignupPage {
 
   signin(){
     this.navCtrl.setRoot('LoginPage');
-  }
-
-  handleError(err){
-    console.log(err.message);
-      this.loading = false;
-      this.toast.create({
-        message: err.message,
-        showCloseButton: true,
-          closeButtonText: 'Ok',
-          position: 'top',
-          cssClass: 'toast_margins full_width'
-    }).present()
   }
 
   persistUser(){
@@ -104,15 +90,21 @@ export class SignupPage {
             this.navCtrl.setRoot('WelcomePage').then(() =>{
               //alert('navigated');
               this.loading = false;
-            }).catch(err =>{
-            this.handleError(err);
-          });
-          }).catch(err =>{
-            this.handleError(err);
+            })
+            .catch(err => {
+              this.errHandler.handleError(err);
+              this.loading = false;
+            })
           })
-        }).catch(err => {
-        this.handleError(err);
-      })
+          .catch(err => {
+            this.errHandler.handleError(err);
+            this.loading = false;
+          })
+        })
+        .catch(err => {
+          this.errHandler.handleError(err);
+          this.loading = false;
+        })
     }
   }
 

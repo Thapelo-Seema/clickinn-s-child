@@ -4,6 +4,7 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { LocalDataProvider } from '../../providers/local-data/local-data';
 import { User } from '../../models/users/user.interface';
+import { ErrorHandlerProvider } from '../../providers/error-handler/error-handler';
 
 /**
  * Generated class for the EditProfilePage page.
@@ -37,14 +38,17 @@ export class EditProfilePage {
   loading: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private storage: LocalDataProvider,
-  	private toast: ToastController, private afs: AngularFirestore){
+  	private toast: ToastController, private afs: AngularFirestore, private errHandler: ErrorHandlerProvider){
     this.loading = true;
   		this.storage.getUser().then(data =>{
 	  		this.user = data;
         console.log('User: ', this.user);
 	  		if(this.user.photoURL !== '') this.image = this.user.photoURL;
         this.loading = false;
-	  }).catch(err => this.handleError(err))
+	  }).catch(err => {
+      this.errHandler.handleError(err);
+      this.loading = false;
+    })
   }
 
   save(){
@@ -54,25 +58,16 @@ export class EditProfilePage {
         message: "Profile successfully updated",
         showCloseButton: true,
           closeButtonText: 'Ok',
-          position: 'top',
+          position: 'middle',
           cssClass: 'toast_margins full_width'
     }).present().then(() =>{
         this.loading = false;
     })
       
-    }).catch(err => this.handleError(err))
-  }
-
-  handleError(err){
-    console.log(err.message);
+    }).catch(err => {
+      this.errHandler.handleError(err);
       this.loading = false;
-      this.toast.create({
-        message: err.message,
-        showCloseButton: true,
-          closeButtonText: 'Ok',
-          position: 'top',
-          cssClass: 'toast_margins full_width'
-    }).present()
+    })
   }
 
 }

@@ -15,6 +15,7 @@ import { AccommodationsProvider } from '../providers/accommodations/accommodatio
 import { IonicStorageModule } from '@ionic/storage'
 import { LocalDataProvider } from '../providers/local-data/local-data';
 import { IonicImageViewerModule } from 'ionic-img-viewer';
+import { ErrorHandlerProvider } from '../providers/error-handler/error-handler';
 
 
 export const firebaseConfig = {
@@ -50,7 +51,8 @@ export const firebaseConfig = {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     MapsProvider, 
     AccommodationsProvider,
-    LocalDataProvider
+    LocalDataProvider,
+    ErrorHandlerProvider
   ]
 })
 export class AppModule {}

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { Apartment } from '../../models/properties/apartment.interface';
 import { LocalDataProvider } from '../../providers/local-data/local-data';
+import { ErrorHandlerProvider } from '../../providers/error-handler/error-handler';
 
 /**
  * Generated class for the SecurePage page.
@@ -33,11 +34,15 @@ export class SecurePage {
   loading: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController,
-    private storage: LocalDataProvider, private toast: ToastController){
+    private storage: LocalDataProvider, private errHandler: ErrorHandlerProvider){
   }
 
   ionViewWillLoad(){
-    this.storage.getApartment().then(data => this.apartment = data).catch(err => this.handleError(err));
+    this.storage.getApartment().then(data => this.apartment = data)
+    .catch(err => {
+      this.errHandler.handleError(err);
+      this.loading = false;
+    })
  }
 
   generateRef(){
@@ -55,19 +60,11 @@ export class SecurePage {
   }
 
   gotoPayment(paymentMethod: string){
-    this.navCtrl.push('PaymentDetailsPage', {payment_method: paymentMethod}).catch(err => this.handleError(err))
-  }
-
-  handleError(err){
-    console.log(err.message);
-      this.loading = true;
-      this.toast.create({
-        message: err.message,
-        showCloseButton: true,
-          closeButtonText: 'Ok',
-          position: 'top',
-          cssClass: 'toast_margins full_width'
-    }).present()
+    this.navCtrl.push('PaymentDetailsPage', {payment_method: paymentMethod})
+    .catch(err => {
+      this.errHandler.handleError(err);
+      this.loading = false;
+    })
   }
 
 }

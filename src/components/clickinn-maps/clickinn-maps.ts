@@ -40,7 +40,7 @@ export class ClickinnMapsComponent implements OnInit, OnDestroy {
 
 	constructMap(place: Address){
 		this.apartmentSubs$ = this.accom_svc.getRatedApartments(this.search).subscribe(apartments =>{
-			console.log('search results in clickinn-maps: ', apartments);
+			//console.log('search results in clickinn-maps: ', apartments);
 			this.apartments = apartments;
 			this.maps_svc.initialiseMap(place.lat, place.lng, this.mapRef)
   			.then(map =>{
@@ -52,7 +52,7 @@ export class ClickinnMapsComponent implements OnInit, OnDestroy {
 	  					icon: {url: 'assets/imgs/png/poi.png'}
 	  				}
 	  			)
-	  			this.maps_svc.addApartmentMarkersWithClickListeners(apartments, place, map);
+	  			this.maps_svc.addApartmentMarkersWithClickListeners(apartments, place, map)
   			})
 		})
 	}

@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { LocalDataProvider } from '../../providers/local-data/local-data';
 import { User } from '../../models/users/user.interface';
+import { ErrorHandlerProvider } from '../../providers/error-handler/error-handler';
 /**
  * Generated class for the LoginPage page.
  *
@@ -34,7 +35,8 @@ export class LoginPage {
   password: string = '';
   loading: boolean = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, private afAuth: AngularFireAuth,
-  	private afs: AngularFirestore, private storage: LocalDataProvider, private toast: ToastController) {
+  	private afs: AngularFirestore, private storage: LocalDataProvider,
+    private errHandler: ErrorHandlerProvider) {
   	this.seeker = {
       email: '',
       firstname: '',
@@ -51,7 +53,6 @@ export class LoginPage {
     }
   }
 
-
   signup(){
   	this.navCtrl.push('SignupPage');
   }
@@ -66,24 +67,20 @@ export class LoginPage {
   			this.storage.setUser(this.seeker).then(() =>{
           //console.log('CurrentUser: ', this.seeker)
   				this.navCtrl.setRoot('WelcomePage').then(() => this.loading = false);
-  			}).catch(err => this.handleError(err))
+  			})
+        .catch(err => {
+          this.errHandler.handleError(err);
+          this.loading = false;
+        })
   		}, err =>{
-        this.handleError(err);
+        this.errHandler.handleError(err);
+        this.loading = false;
       })
-  	}).catch(err => {
-  		this.handleError(err)
   	})
+    .catch(err => {
+      this.errHandler.handleError(err);
+      this.loading = false;
+    })
   }
 
-   handleError(err){
-    console.log(err.message);
-      this.loading = false;
-      this.toast.create({
-        message: err.message,
-        showCloseButton: true,
-          closeButtonText: 'Ok',
-          position: 'top',
-          cssClass: 'toast_margins full_width'
-    }).present()
-  }
 }

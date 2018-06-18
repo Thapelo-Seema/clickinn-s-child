@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { Address } from '../../models/location/address.interface';
 import { Search } from '../../models/search.interface';
 import { LocalDataProvider } from '../../providers/local-data/local-data';
 import { AngularFirestore } from 'angularfire2/firestore';
+import { ErrorHandlerProvider } from '../../providers/error-handler/error-handler';
 //import { AngularFireAuth } from 'angularfire2/auth';
 
 /**
@@ -37,10 +38,14 @@ export class PrefferencesPage {
   loading: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alert: ModalController,  
-  	private storage: LocalDataProvider, private afs: AngularFirestore, private toast: ToastController) {
-  	this.storage.getPOI().then(data => this.pointOfInterest = data).catch(err => this.handleError(err)) ;
+  	private storage: LocalDataProvider, private afs: AngularFirestore,
+    private errHandler: ErrorHandlerProvider) {
+  	this.storage.getPOI().then(data => this.pointOfInterest = data)
+    .catch(err => {
+      this.errHandler.handleError(err);
+      this.loading = false;
+    })
   }
-
 
   gotoSeekPage(){
     this.loading = true;
@@ -57,11 +62,19 @@ export class PrefferencesPage {
     this.search_object.timeStamp = Date.now();
     this.afs.collection('Searches2').add(this.search_object).then(data =>{
       this.loading = false;
-    }).catch(err => this.handleError(err))
+    })
+    .catch(err => {
+      this.errHandler.handleError(err);
+      this.loading = false;
+    })
     this.storage.setSearch(this.search_object).then(data =>{
       this.loading = false;
     	this.navCtrl.push('SeekingPage', {search: this.search_object, poi: this.pointOfInterest});
-    }).catch(err => this.handleError(err))
+    })
+    .catch(err => {
+      this.errHandler.handleError(err);
+      this.loading = false;
+    })
   }
 
   showWarnig(title: string, message: string){
@@ -75,18 +88,6 @@ export class PrefferencesPage {
 
   showMore(){
     this.more = !this.more;
-  }
-
-  handleError(err){
-    console.log(err.message);
-      this.loading = false;
-      this.toast.create({
-        message: err.message,
-        showCloseButton: true,
-          closeButtonText: 'Ok',
-          position: 'top',
-          cssClass: 'toast_margins full_width'
-    }).present()
   }
 
 

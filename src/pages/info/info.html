@@ -29,28 +29,30 @@
 		</ion-slides>
 		<h2 text-center>More info</h2>
 		<ion-item text-wrap>
-			<ion-icon name='walk' item-start></ion-icon>
-			<h2>This place is a {{adjustedDuration}} min walk to</h2> 
-			<p>{{pointOfInterest?.name ? pointOfInterest?.name : 'Your location of interest'}}</p>
+			<ion-icon name='walk' color="light" item-start></ion-icon>
+			<h2>This place is within a 10 min walk to</h2> 
+			<ion-list>
+				<h4 *ngFor="let place of apartment?.property?.nearbys"> {{place}} </h4>
+			</ion-list>
 		</ion-item>
 		<ion-item>
-			<ion-icon name='cash' item-start></ion-icon>
+			<ion-icon name='cash' color="light" item-start></ion-icon>
 			Deposit <ion-note item-end>R{{apartment?.deposit}}</ion-note>
 		</ion-item>
 		<ion-item>
-			<ion-icon name='logo-usd' item-start></ion-icon>
+			<ion-icon name='logo-usd' color="light" item-start></ion-icon>
 	       	Monthly rent <ion-note item-end> R{{apartment?.price}}</ion-note>
 		</ion-item>
 		<ion-item>
-			<ion-icon name='wifi' item-start></ion-icon>
+			<ion-icon name='wifi' color="light" item-start></ion-icon>
 			Free wifi <ion-note item-end>{{apartment?.property?.wifi ? "Available" : "Not available"}}</ion-note>
 		</ion-item>
 		<ion-item>
-			<ion-icon name='shirt' item-start></ion-icon>
+			<ion-icon name='shirt' color="light" item-start></ion-icon>
 			Laundry machine <ion-note item-end>{{apartment?.property?.laundry ? "Available" : "Not available"}}</ion-note>
 		</ion-item>
 		<ion-item>
-			<ion-icon name='checkmark' item-start></ion-icon>
+			<ion-icon name='checkmark' color="light" item-start></ion-icon>
 			NSFAS status<ion-note item-end>{{apartment?.property?.nsfas ? "Accreditted" : "N/A"}}</ion-note>
 		</ion-item>
 	</ion-list>

@@ -6,7 +6,8 @@ import { MapsProvider } from '../../providers/maps/maps';
 import { Address } from '../../models/location/address.interface';
 import { Search } from '../../models/search.interface';
 import { LocalDataProvider } from '../../providers/local-data/local-data';
-import { Seeker } from '../../models/users/seeker.interface'
+import { Seeker } from '../../models/users/seeker.interface';
+import { ErrorHandlerProvider } from '../../providers/error-handler/error-handler';
 //import { Observable } from 'rxjs';
 //import 'rxjs/add/operator/take';
 
