@@ -1,13 +1,12 @@
 import { Component, OnInit, ViewChild, ElementRef, Input, OnDestroy } from '@angular/core';
 import { MapsProvider } from '../../providers/maps/maps';
-//import { Geolocation } from '@ionic-native/geolocation';
-//import { MarkerOptions } from '../../models/markeroptions.interface';
 import { Address } from '../../models/location/address.interface';
 import { AccommodationsProvider } from '../../providers/accommodations/accommodations';
 import { Apartment } from '../../models/properties/apartment.interface';
 import { Search } from '../../models/search.interface';
 import 'rxjs/add/operator/take';
 
+declare var MarkerClusterer: any;
 /**
  * Generated class for the ClickinnMapsComponent component.
  *
@@ -21,11 +20,10 @@ import 'rxjs/add/operator/take';
 export class ClickinnMapsComponent implements OnInit, OnDestroy {
 
 	@ViewChild('map') mapRef: ElementRef;
-	//private map: any;
 	@Input() pointOfInterest: Address;
 	@Input() search: Search;
-	private apartments: Apartment[] = [];
-	private apartmentSubs$;
+	apartments: Apartment[] = [];
+	apartmentSubs$: any;
 
   constructor(private maps_svc: MapsProvider, private accom_svc: AccommodationsProvider){
   }
@@ -52,10 +50,10 @@ export class ClickinnMapsComponent implements OnInit, OnDestroy {
 	  					icon: {url: 'assets/imgs/png/poi.png'}
 	  				}
 	  			)
-	  			this.maps_svc.addApartmentMarkersWithClickListeners(apartments, place, map)
+	  			let markers = this.maps_svc.addApartmentMarkersWithClickListeners(apartments, place, map);
+	  			let markerClusterer = new MarkerClusterer(map, markers);
   			})
 		})
 	}
 
-	
 }

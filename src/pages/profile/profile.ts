@@ -19,7 +19,7 @@ import { ErrorHandlerProvider } from '../../providers/error-handler/error-handle
 export class ProfilePage {
 
   user: User;	//the current user
-  image: string = "assets/imgs/MyselfMale.png";
+  image: string = "assets/imgs/placeholder.png";
   loading: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private storage: LocalDataProvider,
@@ -29,6 +29,7 @@ export class ProfilePage {
         this.afs.collection('Users').doc<User>(data.uid).valueChanges().subscribe(user =>{
           this.user = user;
           if(this.user.photoURL !== '') this.image = this.user.photoURL;
+          else console.log(this.user.photoURL);
           this.loading = false;
         },
         err =>{

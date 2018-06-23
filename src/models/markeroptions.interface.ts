@@ -5,5 +5,5 @@ export interface MarkerOptions{
 	map: any;
 	title?: string;
 	icon?:any;
-	shape?: string;
+	label?: any;
 }

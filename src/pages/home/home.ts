@@ -10,7 +10,7 @@ import { Seeker } from '../../models/users/seeker.interface';
 import { ErrorHandlerProvider } from '../../providers/error-handler/error-handler';
 //import { Observable } from 'rxjs';
 //import 'rxjs/add/operator/take';
-
+declare var google: any;
 /**
  * Generated class for the HomePage page.
  *
@@ -26,15 +26,16 @@ export class HomePage {
 
  private search_object: Search;
  private featuredApartments: Apartment[];
- 
+ service = new google.maps.places.AutocompleteService();
  predictions: any[] = [];
  pointOfInterest: Address;
- dataLoaded: boolean = false;
+ loading: boolean = false;
  more: boolean = false;
  user: Seeker;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private storage: LocalDataProvider, 
-  	private accom_svc: AccommodationsProvider, private map_svc: MapsProvider, private alert: ModalController) {
+  	private accom_svc: AccommodationsProvider, private map_svc: MapsProvider, private alert: ModalController,
+    private errHandler: ErrorHandlerProvider) {
   	this.storage.getSeeker().then(data => this.user = data);
   }
 
@@ -76,20 +77,31 @@ export class HomePage {
   }
 
   getPredictions(event){
-  	if(event.key === "Backspace" || event.code === "Backspace"){
+    this.loading = true;
+    if(event.key === "Backspace" || event.code === "Backspace"){
       setTimeout(()=>{
-        this.map_svc.getPlacePredictionsSA(event).then(data => {
+        this.map_svc.getPlacePredictionsSA(event.target.value, this.service).then(data => {
           this.predictions = [];
           this.predictions = data;
-        }, err => console.log(err));
+          this.loading = false;
+        })
+        .catch(err => {
+          this.errHandler.handleError(err);
+          this.loading = false;
+        })
       }, 3000)
     }else{
-      this.map_svc.getPlacePredictionsSA(event).then(data => {
+      this.map_svc.getPlacePredictionsSA(event.target.value, this.service).then(data => {
         this.predictions = [];
         this.predictions = data;
-      }, err => console.log(err));
+        this.loading = false;
+      })
+      .catch(err => {
+        this.errHandler.handleError(err);
+        this.loading = false;
+      })
     }
-	}
+  }
 
 	selectPlace(place){
 		this.map_svc.getSelectedPlace(place).then(data => {

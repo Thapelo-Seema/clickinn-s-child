@@ -6,8 +6,7 @@
 -->
 <ion-header>
   <ion-navbar color="clickinn-pitch">
-    <ion-title text-center style="font-family: 'Ubuntu', sans-serif;">Clickinn - 
-      <font style="color: #32db64">{{user ? returnFirst(user?.displayName): ''}}</font></ion-title>
+    <ion-title style="font-family: 'Ubuntu', sans-serif;">Clickinn</ion-title>
     <button ion-button menuToggle icon-only>
       <ion-icon name='menu'></ion-icon>
     </button>
@@ -18,17 +17,14 @@
     <ion-spinner name="ios"></ion-spinner>
   </div>
 	<div class="centered_on_screen full_width">
-		<h1  style="color: white">Moving closer to work or school ?</h1>
+		<h1  style="color: white">Moving closer to school or work {{user ? returnFirst(user?.displayName): ''}}?</h1>
 		<p style="color: white">Enter the name of the institution, organisation or location below</p>
-		<ion-searchbar [(ngModel)]="pointOfInterest.description" placeholder="e.g. Wits  or  Braamfontein" 
-			(ionInput)="getPredictions($event)" mode="ios">
+		<ion-searchbar type="search" [(ngModel)]="pointOfInterest.description" 
+			placeholder="e.g. Wits or liberty life  or  Braamfontein" (ionInput)="getPredictions($event)" mode="ios">
 		</ion-searchbar>
 		<ion-list *ngIf="predictions">
 			<button ion-item *ngFor="let pred of predictions" (click)="selectPlace(pred)">{{pred?.description}}</button>
 		</ion-list>
-		<ion-buttons end>
-			<button ion-button round outline (click)="nextPage()">Next &nbsp;&nbsp;<ion-icon end name="arrow-forward"></ion-icon></button>
-		</ion-buttons>
 	</div>
 </ion-content>
 

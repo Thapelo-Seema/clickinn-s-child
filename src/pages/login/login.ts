@@ -64,7 +64,7 @@ export class LoginPage {
   		this.afs.collection('Users').doc<User>(`${firebaseUser.user.uid}`).valueChanges().subscribe(data =>{
         //console.log('ClickinnUser: ', data);
   			this.seeker = data;
-  			this.storage.setUser(this.seeker).then(() =>{
+  			this.storage.setUser(data).then(() =>{
           //console.log('CurrentUser: ', this.seeker)
   				this.navCtrl.setRoot('WelcomePage').then(() => this.loading = false);
   			})

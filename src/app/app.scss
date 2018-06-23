@@ -14,11 +14,23 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
-.raleway{
+ion-content{
 	font-family: 'Raleway', sans-serif;
 }
 
+ion-icon{
+	font-size: 30px;
+}
+
+ion-spinner{
+	font-size: 100px;
+}
+
 .clickinn-bg{
+	background: #000020;
+}
+
+.clickinn-bg2{
 	background: #000010;
 }
 

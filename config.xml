@@ -78,7 +78,6 @@
     </platform>
     <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
     <plugin name="cordova-plugin-device" spec="^2.0.1" />
-    <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
     <plugin name="cordova-plugin-ionic-webview" spec="^1.1.16" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
     <allow-navigation href="http://192.168.8.103:8100" />
@@ -88,15 +87,14 @@
     <edit-config file="*-info.plist" mode="merge" target="NSLocationWhenInUseUsageDescription">
         <string>We want your location! Best regards NSA</string>
     </edit-config>
-    <plugin name="cordova-plugin-datepicker" spec="^0.9.3" />
-    <plugin name="cordova-plugin-calendar" spec="^5.0.0" />
-    <plugin name="cordova-plugin-googlemaps" spec="^2.2.9">
-        <variable name="API_KEY_FOR_ANDROID" value="AIzaSyAzCjZ7IxVJV9nOWduzbMS0w0nOswluMQw" />
-        <variable name="API_KEY_FOR_IOS" value="AIzaSyB_zXe744FAOuNeD6uBsfcI1fwSgu61Ho0" />
-        <variable name="PLAY_SERVICES_VERSION" value="12.0.0" />
-        <variable name="ANDROID_SUPPORT_V4_VERSION" value="24.1.0" />
-    </plugin>
     <plugin name="cordova-sqlite-storage" spec="^2.3.1" />
-    <plugin name="cordova-plugin-nativestorage" spec="^2.3.1" />
-    <engine name="android" spec="7.0.0" />
+    <plugin name="cordova-plugin-network-information" spec="^2.0.1" />
+    <plugin name="cordova-plugin-calendar" spec="^5.1.2" />
+    <plugin name="cordova-plugin-camera" spec="^4.0.3" />
+    <plugin name="cordova-plugin-datepicker" spec="^0.9.3" />
+    <plugin name="cordova-plugin-device-orientation" spec="^2.0.1" />
+    <plugin name="cordova-plugin-telerik-imagepicker" spec="^2.2.1">
+        <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value="Select picture/s" />
+    </plugin>
+    <engine name="android" spec="^7.1.0" />
 </widget>

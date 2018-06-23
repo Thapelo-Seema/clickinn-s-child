@@ -34,7 +34,7 @@ export class EditProfilePage {
       status: false,
       threads: {}
     }	//the current user
-  image: string = "assets/imgs/MyselfMale.png";
+  image: string = "assets/imgs/placeholder.png";
   loading: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private storage: LocalDataProvider,
@@ -44,6 +44,7 @@ export class EditProfilePage {
 	  		this.user = data;
         console.log('User: ', this.user);
 	  		if(this.user.photoURL !== '') this.image = this.user.photoURL;
+        else console.log(this.user.photoURL);
         this.loading = false;
 	  }).catch(err => {
       this.errHandler.handleError(err);
