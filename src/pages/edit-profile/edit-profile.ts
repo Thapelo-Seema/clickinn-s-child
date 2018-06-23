@@ -28,7 +28,7 @@ export class EditProfilePage {
       status: false,
       threads: {}
     }	//the current user
-  image: string = "assets/imgs/placeholder.png";
+  image: any = "assets/imgs/placeholder.png";
   loading: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private storage: LocalDataProvider,
@@ -72,13 +72,17 @@ export class EditProfilePage {
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
-      sourceType: 2
+      sourceType: 2,
+      allowEdit: true,
+      targetWidth: 800,
+      targetHeight: 800,
+      
     }
 
     this.camera.getPicture(options).then((imageData) => {
      // imageData is either a base64 encoded string or a file URI
      // If it's base64:
-     let base64Image = 'data:image/jpeg;base64,' + imageData;
+     this.image = 'data:image/jpeg;base64,' + imageData;
     }).catch(err => this.errHandler.handleError({errCode: 'IMAGE_NOT_SELECTED', message: 'No image selected'}))
   }
 
