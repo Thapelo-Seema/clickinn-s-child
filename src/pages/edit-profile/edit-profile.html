@@ -12,7 +12,7 @@
 <ion-content>
 	<ion-item no-lines style="background: #000050; color: white">
 		<ion-buttons end>
-		  	<button ion-button style="background: #000010; color: white"><ion-icon name="image"></ion-icon> &nbsp;&nbsp; Photo</button>
+		  	<button ion-button style="background: #000010; color: white" (click)="changeDp()" ><ion-icon name="image"></ion-icon> &nbsp;&nbsp; Photo</button>
 		</ion-buttons>
 		<div text-center>
 			<img src="{{image}}" class="round" alt="User display picture" />

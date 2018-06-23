@@ -5,13 +5,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { LocalDataProvider } from '../../providers/local-data/local-data';
 import { User } from '../../models/users/user.interface';
 import { ErrorHandlerProvider } from '../../providers/error-handler/error-handler';
-
-/**
- * Generated class for the EditProfilePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { Camera, CameraOptions } from '@ionic-native/camera';
 
 @IonicPage()
 @Component({
@@ -38,7 +32,8 @@ export class EditProfilePage {
   loading: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private storage: LocalDataProvider,
-  	private toast: ToastController, private afs: AngularFirestore, private errHandler: ErrorHandlerProvider){
+  	private toast: ToastController, private afs: AngularFirestore, private errHandler: ErrorHandlerProvider,
+    private camera: Camera){
     this.loading = true;
   		this.storage.getUser().then(data =>{
 	  		this.user = data;
@@ -69,6 +64,22 @@ export class EditProfilePage {
       this.errHandler.handleError(err);
       this.loading = false;
     })
+  }
+  //Select or take a picture from the galley
+  changeDp(){
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      sourceType: 2
+    }
+
+    this.camera.getPicture(options).then((imageData) => {
+     // imageData is either a base64 encoded string or a file URI
+     // If it's base64:
+     let base64Image = 'data:image/jpeg;base64,' + imageData;
+    }).catch(err => this.errHandler.handleError({errCode: 'IMAGE_NOT_SELECTED', message: 'No image selected'}))
   }
 
 }

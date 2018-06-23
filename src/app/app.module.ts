@@ -16,7 +16,8 @@ import { IonicStorageModule } from '@ionic/storage'
 import { LocalDataProvider } from '../providers/local-data/local-data';
 import { IonicImageViewerModule } from 'ionic-img-viewer';
 import { ErrorHandlerProvider } from '../providers/error-handler/error-handler';
-import { Network } from '@ionic-native/network'
+import { Network } from '@ionic-native/network';
+import { Camera } from '@ionic-native/camera';
 
 
 export const firebaseConfig = {
@@ -48,7 +49,7 @@ export const firebaseConfig = {
     MyApp
   ],
   providers: [
-   Geolocation, Calendar, DatePicker, Network,
+   Geolocation, Calendar, DatePicker, Network, Camera, 
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     MapsProvider, 
     AccommodationsProvider,
