@@ -5,7 +5,6 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { User } from '../models/users/user.interface';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { ErrorHandlerProvider } from '../providers/error-handler/error-handler';
-import { Network } from '@ionic-native/network';
 
 import 'rxjs/add/operator/take';
 
@@ -33,14 +32,15 @@ export class MyApp {
       //else --> login
 
   constructor(private storage: LocalDataProvider, private afs: AngularFirestore, private afAuth: AngularFireAuth, 
-    private platform: Platform, private errHandler: ErrorHandlerProvider, private network: Network){
+    private platform: Platform, private errHandler: ErrorHandlerProvider){
     this.loading = true;
     //Check for platform readiness before doing anything
     this.platform.ready()
     .then(() =>{
       console.log('platform ready')
       //firestore required setting
-      afs.firestore.settings({timestampsInSnapshots: true}); 
+      afs.firestore.settings({timestampsInSnapshots: true});
+      this.initializeUser(); 
     })
     .then(() => this.monitorAuthState())
     .then(() => this.monitorConnectionState())
@@ -61,6 +61,10 @@ export class MyApp {
     this.afAuth.auth.signOut().then(() =>{
       this.navCtrl.setRoot('LoginPage');  
     }) 
+  }
+  //Navigate to the upload and earn page
+  uploadAndEarn(){
+    this.navCtrl.push('UploadAndEarnPage');
   }
   //Navigates the user their appropriate homepage at startup
   navigateUser(user: User){
@@ -147,7 +151,6 @@ export class MyApp {
   syncAuthenticatedUser(){
     if(this.afAuth.auth.currentUser){
       this.afs.collection('Users').doc<User>(this.afAuth.auth.currentUser.uid).valueChanges()
-      .take(1)
       .subscribe(user =>{
         if(user){
           this.user = user;
@@ -173,7 +176,7 @@ export class MyApp {
         console.log('Firebase user found...')
         if(this.platform.is('cordova')){
           console.log('on mobile device...')
-          if(this.network.type){//If there is a network connection
+          if(window.navigator.onLine){//If there is a network connection
             console.log('Connected!');
             this.online = true;
             this.initializeAuthenticatedUser();
@@ -198,10 +201,11 @@ export class MyApp {
           }
         }
       }
-      else if(user == null && this.navCtrl.getActive().name !=='LoginPage'){
+      else if(user == null){
         this.navCtrl.setRoot('LoginPage');
         this.loading = false;  
       }else{
+        this.loading = false;
         console.log('I dunno')
       }
     })
@@ -209,17 +213,28 @@ export class MyApp {
   //Update the offine user data when an internet connection is established
   monitorConnectionState(){
     console.log('MonitorConnectionState running....')
-    if(this.platform.is('cordova')){
-      this.network.onConnect().subscribe(() =>{
-        this.online = true;
-        this.syncAuthenticatedUser();
-      })
-    }else{
       window.addEventListener('online', () =>{
         this.online = true;
         this.syncAuthenticatedUser();
       })
-    }
+  }
+
+  initializeUser(){
+    this.user ={
+    firstname: '',
+    lastname: '',
+    uid: '',
+    user_type: '',
+    email: '',
+    is_host: false,
+    displayName: '',
+    fcm_token: '',
+    phoneNumber: '',
+    photoURL: '',
+    rating: '',
+    status: false,
+    threads: null
+  };
   }
 }
 

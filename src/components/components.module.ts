@@ -4,12 +4,15 @@ import { FormsModule } from '@angular/forms';
 import { AccommodationsComponent } from './accommodations/accommodations';
 import { IonicModule } from 'ionic-angular';
 import { CommonModule } from '@angular/common';
+import { UploadAndEarnComponent } from './upload-and-earn/upload-and-earn';
 
 @NgModule({
 	declarations: [ClickinnMapsComponent,
-    AccommodationsComponent],
+    AccommodationsComponent,
+    UploadAndEarnComponent],
 	imports: [FormsModule, IonicModule, CommonModule],
 	exports: [ClickinnMapsComponent,
-    AccommodationsComponent]
+    AccommodationsComponent,
+    UploadAndEarnComponent]
 })
 export class ComponentsModule {}

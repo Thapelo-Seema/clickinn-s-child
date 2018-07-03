@@ -140,24 +140,22 @@ export class AppointmentPage {
 
   createCalenderEvent(){
   	this.calender.hasReadWritePermission().then(permission =>{
-  		this.calender.createEventWithOptions(
+  		this.calender.createEvent(
         'Clickinn Viewing Appointment', 
   		  this.apartment.property.address.sublocality_lng,
   		  `You requested to view the ${this.apartment.room_type} at ${this.apartment.property.address.description}.`,
   		  new Date(), 
-        this.myDate,
-        {firstReminderMinutes: 120}
+        this.myDate
   		)
   	},
   	denied =>{
   		this.calender.requestReadWritePermission().then(approved =>{
-  			this.calender.createEventWithOptions(
+  			this.calender.createEvent(
           'Clickinn Viewing Appointment', 
 	  		  this.apartment.property.address.sublocality_lng,
 	  		  `You requested to view the ${this.apartment.room_type} at ${this.apartment.property.address.description}.`,
 	  		  new Date(), 
-          this.myDate,
-          {firstReminderMinutes: 120}
+          this.myDate
 	  		)
   		},
   		err =>{

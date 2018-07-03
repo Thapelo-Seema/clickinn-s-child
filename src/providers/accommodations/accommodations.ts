@@ -10,19 +10,12 @@ import { Apartment } from '../../models/properties/apartment.interface';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Search } from '../../models/search.interface';
 import { Image } from '../../models/image.interface';
+import { User } from '../../models/users/user.interface';
 /*import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';*/
-/*
-  Generated class for the AccommodationsProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 
 @Injectable()
 export class AccommodationsProvider {
-
-
 
   constructor( private db: AngularFireDatabase, private afs: AngularFirestore, private http: HttpClient){}
 
@@ -34,6 +27,11 @@ export class AccommodationsProvider {
     const col = this.afs.collection('Apartments');
     const docu = col.doc(apart_id);
     return docu.collection<Image>(`images`).valueChanges()
+  }
+
+  getUsersProperties(uid: string):Observable<Property[]>{
+    return this.afs.collection<Property>('Properties', ref => ref.where('user_id', '==', uid))
+    .valueChanges()
   }
 
   getPropertyImages(prop_id: string):Observable<Image[]>{
@@ -416,8 +414,7 @@ export class AccommodationsProvider {
            .where('available', '==', true)
            .orderBy('price', 'asc')
         ).valueChanges()
-   }
-    
+    } 
   }
 
   getRatedApartments(search: Search): Observable<Apartment[]>{
@@ -448,7 +445,7 @@ export class AccommodationsProvider {
     var rating = 0;
     if(apartment.property.nearbys != undefined){
       rating += apartment.property.nearbys.length/100
-      if(apartment.property.nearbys.indexOf(search.Address) != -1) rating+=2;
+      if(apartment.property.nearbys.indexOf(search.Address.description) != -1) rating+=2;
     }
     if(apartment.property.wifi) rating +=1;
     if(apartment.property.laundry) rating +=1;
@@ -503,28 +500,26 @@ export class AccommodationsProvider {
       })
   }
 
-
- changePropertyStructure(){
-  this.db.list<Apartment>('Apartments').valueChanges().take(1).subscribe(apartments =>{
-    apartments.forEach(apartment =>{
-      this.db.object(`Properties/${apartment.prop_id}`).valueChanges().take(1).subscribe(property =>{
-        this.db.object(`Apartments/${apartment.apart_id}/property`).set(property).then(() =>{
-          console.log('success')
-        });
+  changePropertyStructure(){
+    this.db.list<Apartment>('Apartments').valueChanges().take(1).subscribe(apartments =>{
+      apartments.forEach(apartment =>{
+        this.db.object(`Properties/${apartment.prop_id}`).valueChanges().take(1).subscribe(property =>{
+          this.db.object(`Apartments/${apartment.apart_id}/property`).set(property).then(() =>{
+            console.log('success')
+          });
+        })
       })
     })
-  })
-}
+  }
 
-
-changeProperty(){
-  this.db.list<Apartment>('Apartments').valueChanges().take(1).subscribe(apartments =>{
-    apartments.forEach(apartment =>{
-        this.db.object(`Properties/${apartment.prop_id}`).set(apartment.property).then(success =>{
-          console.log('successful')
-        });
+  changeProperty(){
+    this.db.list<Apartment>('Apartments').valueChanges().take(1).subscribe(apartments =>{
+      apartments.forEach(apartment =>{
+          this.db.object(`Properties/${apartment.prop_id}`).set(apartment.property).then(success =>{
+            console.log('successful')
+          });
+      })
     })
-  })
-}
+  }
 
 }

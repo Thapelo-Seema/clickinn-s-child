@@ -111,7 +111,7 @@ export class SeekingPage {
     var rating = 0;
     if(apartment.property.nearbys != undefined){
       rating += apartment.property.nearbys.length/100
-      if(apartment.property.nearbys.indexOf(this.search_object.Address) != -1) rating+=2;
+      if(apartment.property.nearbys.indexOf(this.search_object.Address.description) != -1) rating+=2;
     }
     if(apartment.property.wifi) rating +=1;
     if(apartment.property.laundry) rating +=1;

@@ -3,6 +3,10 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 import { Apartment } from '../../models/properties/apartment.interface';
 import { LocalDataProvider } from '../../providers/local-data/local-data';
 import { ErrorHandlerProvider } from '../../providers/error-handler/error-handler';
+import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer';
+import { File } from '@ionic-native/file';
+import { FileTransfer } from '@ionic-native/file-transfer';
+
 
 /**
  * Generated class for the SecurePage page.
@@ -34,7 +38,8 @@ export class SecurePage {
   loading: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController,
-    private storage: LocalDataProvider, private errHandler: ErrorHandlerProvider){
+    private storage: LocalDataProvider, private errHandler: ErrorHandlerProvider, private file: File, private fileTransfer: FileTransfer,
+    private document: DocumentViewer){
   }
 
   ionViewWillLoad(){
@@ -65,6 +70,32 @@ export class SecurePage {
       this.errHandler.handleError(err);
       this.loading = false;
     })
+  }
+
+  openLocalPDF(){
+    const options: DocumentViewerOptions ={
+      title: 'My Current Lease',
+      openWith: {enabled: true},
+      print: {enabled: true},
+      search: {enabled: true}
+    }
+    this.document.viewDocument('assets/docs/lease.pdf','application/pdf', options);
+  }
+
+  downloadAndOpenPDF(){
+    let path = this.file.dataDirectory;
+    const options: DocumentViewerOptions ={
+      title: 'My Current Lease',
+      openWith: {enabled: true},
+      print: {enabled: true},
+      search: {enabled: true}
+    }
+    const transfer = this.fileTransfer.create();
+    transfer.download('https://firebasestorage.googleapis.com/v0/b/clickinn-996f0.appspot.com/o/lease.pdf?alt=media&token=9a1ac086-aa34-4841-92fb-3a4208c0afa7', path + 'myClickinnLease.pdf').then(entry =>{
+      let url = entry.toURL();
+      this.document.viewDocument(url, 'application/pdf', options);
+    })
+
   }
 
 }

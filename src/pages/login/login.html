@@ -3,8 +3,7 @@
 	<div style="width: 100%">
 		<ion-item text-wrap no-lines style="background: transparent; color: white">
 			<div text-center>
-				<img src="assets/imgs/clickinn_logo.jpg" width="250px" height="250px" style=" animation: spin 1.2s linear infinite;
-      			z-index: 1000; " />
+				<img src="assets/imgs/logo.png" class="round"/>
 			</div>
 	  	</ion-item>
 	  	<form>
@@ -21,7 +20,7 @@
 	  		<button ion-button color="secondary" (click)="signin()">Login</button>
 	  		<button ion-button clear (click)="signup()">Create An Account</button>
 	  	</ion-buttons>
-	  	<button ion-button full clear padding margin color="silver">Forgot password</button>
+	  	<button ion-button full clear padding margin color="silver">Forgot your password</button>
 	</div>
 	<div *ngIf="loading" class="centered_on_screen" style="background: #000010; color: white; font-size: 35">
 		Login... &nbsp;&nbsp;&nbsp;&nbsp;<ion-spinner name="ios"></ion-spinner>

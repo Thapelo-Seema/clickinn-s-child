@@ -26,9 +26,11 @@
 		</p>
 	</ion-item>
 	<ion-item margin-bottom text-wrap text-center no-lines>
-		<h1 style="font-family: 'Ubuntu', sans-serif;">Pay for this apartment and it's yours</h1>
+		<h1 style="font-family: 'Ubuntu', sans-serif;">Pay, Sign Lease &amp; this apartment is yours</h1>
 		<p>Select payment method below.</p>
 	</ion-item>
+	<button ion-button full margin-vertical (click)="downloadAndOpenPDF()">Get Lease</button>
+	
 	<ion-item (click)="gotoPayment('deposit')">
 		<ion-thumbnail item-end>
 			<img src="assets/imgs/deposit.png"/>

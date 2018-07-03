@@ -9,22 +9,24 @@
     <ion-title style="font-family: 'Ubuntu', sans-serif;">Results</ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content>
+<ion-content text-center>
 	<div style="height: 100%" *ngIf="!showList && dataLoaded">
 		<clickinn-maps [pointOfInterest]="pointOfInterest" [search]="search_object"></clickinn-maps>
 	</div>
 	<div *ngIf="!dataLoaded" class="centered_on_screen">
 	    <ion-spinner name="ios"></ion-spinner>
 	</div>
-	<div *ngIf="showList && dataLoaded" style="height: 100%; width:100%; text-align: center">
-		<ion-item no-lines padding style="background: #000010; color: #3A86B7" text-wrap>
+	<div *ngIf="showList && dataLoaded" style="height: 100%; width:100%;">
+		<ion-item no-lines style="background: #000010; color: #3A86B7" text-wrap>
 			<h1 text-center>Best Matched Apartment!</h1>
-			<p text-center padding style="color: whitesmoke">This is the apartment recommended by our expert software, based on the information you gave us.</p>
+			<p text-center padding style="color: whitesmoke">
+				This is the apartment recommended by our expert software, based on the information you gave us.
+			</p>
 			<accommodations [apartment]="bestMatch" (click)="gotoApartment(bestMatch)"></accommodations>
 		</ion-item>
 		<button *ngIf="!more" ion-button clear margin (click)="toggleMore()">show more</button>
 		<button *ngIf="more" ion-button clear margin (click)="toggleMore()">show less</button>
-		<ion-item padding text-center *ngIf="more" no-lines text-wrap>
+		<ion-item *ngIf="more" no-lines text-wrap>
 			<h1 text-center>More Apartments</h1>
 			<p padding>This is an ordered list of more apartments from more recommended to least</p>
 			<accommodations *ngFor="let apartment of apartments" (click)="gotoApartment(apartment)" [apartment]="apartment">

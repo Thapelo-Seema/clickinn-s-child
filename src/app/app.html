@@ -6,7 +6,7 @@
 	<ion-content>
 		<ion-item text-wrap no-lines style="background: #000030; color: white">
 		    <ion-avatar item-left>
-		      <img src="assets/imgs/placeholder.png" class="round"/>
+		      <img src="{{user?.photoURL}}" class="round"/>
 		    </ion-avatar>
 		    <h1 text-center>
 		        {{user?.displayName}}
@@ -23,7 +23,7 @@
 		        <ion-icon name="ios-stopwatch-outline" item-end></ion-icon>
 		        Appointments
 		      </button>
-		      <button ion-item menuClose color="secondary">
+		      <button ion-item menuClose color="secondary" (click)="uploadAndEarn()" >
 		        <ion-icon name="ios-cloud-upload-outline" item-end></ion-icon>
 		        Upload &amp; Earn
 		      </button>

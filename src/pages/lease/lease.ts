@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ErrorHandlerProvider } from '../../providers/error-handler/error-handler';
+import { DocumentViewer } from '@ionic-native/document-viewer';
+import { File } from '@ionic-native/file';
+import { FileTransfer } from '@ionic-native/file-transfer';
 
 /**
  * Generated class for the LeasePage page.
@@ -16,7 +19,8 @@ import { ErrorHandlerProvider } from '../../providers/error-handler/error-handle
 })
 export class LeasePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private file: File, private fileTransfer: FileTransfer,
+  	private document: DocumentViewer) {
   }
 
   ionViewDidLoad() {
