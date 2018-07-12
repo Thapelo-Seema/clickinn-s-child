@@ -15,7 +15,7 @@
 		  	<button ion-button style="background: #000010; color: white" (click)="changeDp()" ><ion-icon name="image"></ion-icon> &nbsp;&nbsp; Photo</button>
 		</ion-buttons>
 		<div text-center>
-			<img src="{{image}}" class="round" alt="User display picture" />
+			<img src="{{image}}" class="round" width="200px" height="200px" alt="User display picture" />
 		</div>
 		<h1 text-center>	
 	  		{{user?.displayName}}  
@@ -39,7 +39,7 @@
 			<ion-label stacked>Email</ion-label>
 			<ion-input type="email" [(ngModel)]="user.email" name="email" autocomplete="email" autocorrect="off"></ion-input>
 		</ion-item>
-		<ion-item no-lines>
+		<ion-item >
 			<ion-label stacked>Phone number</ion-label>
   			<ion-input type="number" [(ngModel)]="user.phoneNumber"></ion-input>
 		</ion-item>

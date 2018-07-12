@@ -14,6 +14,46 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+@font-face {
+  font-family: 'Raleway';
+  src: url('../assets/fonts/1Ptug8zYS_SKggPNyCMIT5lu.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Raleway';
+  src: url('../assets/fonts/1Ptug8zYS_SKggPNyC0ITw.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Ubuntu';
+  src: url('../assets/fonts/4iCs6KVjbNBYlgoKcg72j00.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Ubuntu';
+  src: url('../assets/fonts/4iCs6KVjbNBYlgoKew72j00.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Ubuntu';
+  src: url('../assets/fonts/4iCs6KVjbNBYlgoKcw72j00.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Ubuntu';
+  src: url('../assets/fonts/4iCs6KVjbNBYlgoKfA72j00.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Ubuntu';
+  src: url('../assets/fonts/4iCs6KVjbNBYlgoKcQ72j00.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Ubuntu';
+  src: url('../assets/fonts/4iCs6KVjbNBYlgoKfw72.woff2') format('woff2');
+}
+
 ion-content{
 	font-family: 'Raleway', sans-serif;
 }

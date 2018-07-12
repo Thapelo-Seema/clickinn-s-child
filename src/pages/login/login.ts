@@ -5,6 +5,8 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { LocalDataProvider } from '../../providers/local-data/local-data';
 import { User } from '../../models/users/user.interface';
 import { ErrorHandlerProvider } from '../../providers/error-handler/error-handler';
+import { SignupPage } from '../signup/signup';
+import { WelcomePage } from '../welcome/welcome';
 /**
  * Generated class for the LoginPage page.
  *
@@ -54,7 +56,7 @@ export class LoginPage {
   }
 
   signup(){
-  	this.navCtrl.push('SignupPage');
+  	this.navCtrl.push(SignupPage);
   }
 
   signin(){
@@ -66,7 +68,7 @@ export class LoginPage {
   			this.seeker = data;
   			this.storage.setUser(data).then(() =>{
           //console.log('CurrentUser: ', this.seeker)
-  				this.navCtrl.setRoot('WelcomePage').then(() => this.loading = false);
+  				this.navCtrl.setRoot(WelcomePage).then(() => this.loading = false);
   			})
         .catch(err => {
           this.errHandler.handleError(err);

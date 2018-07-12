@@ -43,7 +43,7 @@
   		</ion-item>
       <ion-buttons end>
         <button ion-button round outline ionicStepperNext (click)="initialApartUpload()">Next&nbsp;&nbsp;
-          <ion-icon name="skip-forward"></ion-icon>
+          <ion-icon name="arrow-round-forward"></ion-icon>
         </button>
       </ion-buttons>
       </ion-step>
@@ -65,10 +65,10 @@
           </button>
         <ion-buttons text-center>
           <button ion-button round outline small ionicStepperPrevious>
-            <ion-icon name="skip-backward"></ion-icon> &nbsp;&nbsp;Back
+            <ion-icon name="arrow-round-back"></ion-icon> &nbsp;&nbsp;Back
           </button>
           <button ion-button small round outline ionicStepperNext (click)="uploadApartPics()">Next&nbsp;&nbsp;
-          <ion-icon name="skip-forward"></ion-icon>
+          <ion-icon name="arrow-round-forward"></ion-icon>
           </button>
         </ion-buttons>
       </ion-step>
@@ -77,9 +77,14 @@
         <p text-center>Select building from list or fill details about the building which the apartment belongs to</p>
         <ion-grid>
           <ion-row>
-            <ion-col col-md-6 col-sm-6 *ngFor="let building of buildings" 
-            style="background: #003399; color: white; border: 1px solid blue" (click)="selectEBuilding(building)" ionicStepperNext>
+            <ion-col col-12 col-md-6 col-sm-6 *ngFor="let building of buildings" 
+               (click)="selectEBuilding(building)" ionicStepperNext>
+            <ion-item text-wrap>
+              <ion-avatar item-start>
+                <img src="{{building?.dP?.url}}"/>
+              </ion-avatar>
               <p>{{building.address.description}}</p>
+            </ion-item>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -123,10 +128,10 @@
         </ion-item>
         <ion-buttons text-center>
           <button ion-button round outline small ionicStepperPrevious>
-            <ion-icon name="skip-backward"></ion-icon> &nbsp;&nbsp;Back
+            <ion-icon name="arrow-round-back"></ion-icon> &nbsp;&nbsp;Back
           </button>
           <button ion-button small round outline ionicStepperNext (click)="initialBuildinUpload()">Next&nbsp;&nbsp;
-          <ion-icon name="skip-forward"></ion-icon>
+          <ion-icon name="arrow-round-forward"></ion-icon>
           </button>
         </ion-buttons>
       </ion-step>
@@ -136,7 +141,12 @@
           <p text-center *ngIf="!buildingSelected">
             Add pictures of the communal areas of the building, like bathrooms, kitchen, laundry, pool etc
           </p>
-          <p *ngIf="buildingSelected">{{building.address.description}}</p>
+          <ion-item text-wrap no-lines *ngIf="buildingSelected">
+            <ion-avatar item-start>
+              <img src="{{building?.dP?.url}}"/>
+            </ion-avatar>
+            <p>{{building.address.description}}</p>
+          </ion-item>
           <ion-grid>
             <ion-row>
               <ion-col col-md-6 *ngFor="let image of propertyImages">
@@ -155,11 +165,11 @@
           </button>
         <ion-buttons>
           <button ion-button round outline small ionicStepperPrevious>
-            <ion-icon name="skip-backward"></ion-icon> &nbsp;&nbsp;Back
+            <ion-icon name="arrow-round-back"></ion-icon> &nbsp;&nbsp;Back
           </button>
         </ion-buttons>
         <ion-buttons padding>
-          <button ion-button color="secondary" full round (click)="uploadApartment()">Upload&nbsp;&nbsp;
+          <button ion-button color="secondary" full padding (click)="uploadApartment()">Upload&nbsp;&nbsp;
           <ion-icon name="ios-cloud-upload-outline"></ion-icon>
           </button>
         </ion-buttons>

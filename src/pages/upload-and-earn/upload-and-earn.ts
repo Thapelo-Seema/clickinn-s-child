@@ -15,12 +15,7 @@ import { Address } from '../../models/location/address.interface';
 import { User } from '../../models/users/user.interface';
 import { LocalDataProvider } from '../../providers/local-data/local-data';
 import { AccommodationsProvider } from '../../providers/accommodations/accommodations'
-/**
- * Generated class for the UploadAndEarnPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+
 declare var google: any;
 
 @IonicPage()

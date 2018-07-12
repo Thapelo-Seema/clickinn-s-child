@@ -6,6 +6,9 @@ import { AccommodationsProvider } from '../../providers/accommodations/accommoda
 import { Search } from '../../models/search.interface';
 import { LocalDataProvider } from '../../providers/local-data/local-data';
 import { ErrorHandlerProvider } from '../../providers/error-handler/error-handler';
+import { ClickinnMapsComponent } from '../../components/clickinn-maps/clickinn-maps';
+import { AccommodationsComponent } from '../../components/accommodations/accommodations';
+import { ApartmentDetailsPage } from '../apartment-details/apartment-details';
 
 
 @IonicPage()
@@ -83,7 +86,7 @@ export class SeekingPage {
 	}
 
 	gotoApartment(apartment: Apartment){
-    this.storage.setApartment(apartment).then(data => this.navCtrl.push('ApartmentDetailsPage'))
+    this.storage.setApartment(apartment).then(data => this.navCtrl.push(ApartmentDetailsPage))
     .catch(err => {
       this.errHandler.handleError(err);
       this.dataLoaded = true;

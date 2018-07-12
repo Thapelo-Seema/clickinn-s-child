@@ -5,6 +5,8 @@ import { Search } from '../../models/search.interface';
 import { LocalDataProvider } from '../../providers/local-data/local-data';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { ErrorHandlerProvider } from '../../providers/error-handler/error-handler';
+import { AlertPage } from '../alert/alert';
+import { SeekingPage } from '../seeking/seeking';
 //import { AngularFireAuth } from 'angularfire2/auth';
 
 /**
@@ -69,7 +71,7 @@ export class PrefferencesPage {
     })
     this.storage.setSearch(this.search_object).then(data =>{
       this.loading = false;
-    	this.navCtrl.push('SeekingPage', {search: this.search_object, poi: this.pointOfInterest});
+    	this.navCtrl.push(SeekingPage, {search: this.search_object, poi: this.pointOfInterest});
     })
     .catch(err => {
       this.errHandler.handleError(err);
@@ -82,7 +84,7 @@ export class PrefferencesPage {
       title: title,
       message: message
     }
-    let warningModal = this.alert.create('AlertPage', {data: myData})
+    let warningModal = this.alert.create(AlertPage, {data: myData})
     warningModal.present();
   }
 

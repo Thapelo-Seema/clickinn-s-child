@@ -5,6 +5,8 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { LocalDataProvider } from '../../providers/local-data/local-data';
 import { User } from '../../models/users/user.interface'
 import { ErrorHandlerProvider } from '../../providers/error-handler/error-handler';
+import { LoginPage } from '../login/login';
+import { WelcomePage } from '../welcome/welcome';
 /**
  * Generated class for the SignupPage page.
  *
@@ -49,45 +51,29 @@ export class SignupPage {
       //alert('signed in!')
       this.seeker.uid = data.user.uid;
       this.seeker.displayName = this.seeker.firstname + ' ' + this.seeker.lastname;
-    })
-    .then(() =>{
-     //alert('storing!');
-      //alert(this.seeker.uid);
       if(this.seeker.uid !== ''){
         //alert('persisting user...');
-        this.persistUser();
-      }
-      else{
-        setTimeout(()=>{
-           if(this.seeker.uid === ''){
-             this.loading = false;
-             alert('Something went wrong, please try again');
-           }else{
-             this.persistUser();
-           }
-        }, 5000)
+        this.persistUser(data.user.uid);
       }
     })
     .catch(err => {
       this.errHandler.handleError(err);
       this.loading = false;
     })
-
-  	
   }
 
   signin(){
-    this.navCtrl.setRoot('LoginPage');
+    this.navCtrl.setRoot(LoginPage);
   }
 
-  persistUser(){
+  persistUser(uid: string){
     if(this.seeker.uid !== ''){
-      this.afs.collection('Users').doc(this.seeker.uid).set(this.seeker)
+      this.afs.collection('Users').doc(uid).set(this.seeker)
       .then(() =>{
           //alert('stored in collection!');
           this.storage.setUser(this.seeker).then(() =>{
            // alert('local storage!');
-            this.navCtrl.setRoot('WelcomePage').then(() =>{
+            this.navCtrl.setRoot(WelcomePage).then(() =>{
               //alert('navigated');
               this.loading = false;
             })

@@ -8,12 +8,6 @@ import { Duration } from '../../models/location/duration.interface';
 import { Address } from '../../models/location/address.interface';
 import { ErrorHandlerProvider } from '../../providers/error-handler/error-handler';
 
-/**
- * Generated class for the InfoPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 @IonicPage()
 @Component({
   selector: 'page-info',

@@ -9,6 +9,7 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { Appointment } from '../../models/appointment.interface';
 import { User } from '../../models/users/user.interface';
 import { ErrorHandlerProvider } from '../../providers/error-handler/error-handler';
+import { ConfirmationPage } from '../confirmation/confirmation'
 
 
 @IonicPage()
@@ -90,7 +91,7 @@ export class AppointmentPage {
       title: "Confirm appointment",
       message: "Please confirm that your viewing appointment details are correct"
     }
-    let warningModal = this.confirmtCtrl.create('ConfirmationPage', {data: myData})
+    let warningModal = this.confirmtCtrl.create(ConfirmationPage, {data: myData})
     warningModal.present();
     warningModal.onDidDismiss(data =>{
       //This is whwre you persist or cancel the appointment on the database

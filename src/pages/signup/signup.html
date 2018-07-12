@@ -14,8 +14,11 @@
 
 
 <ion-content padding class="clickinn-bg">
-  <div *ngIf="loading" class="centered_on_screen">
+  <div *ngIf="loading" class="centered_on_screen" 
+  style="background: rgba(0, 0, 0, 0.8); color: white; font-size: 35; border-radius: 10px;
+   padding: 20px; text-align: center; z-index: 1">
     <ion-spinner name="ios"></ion-spinner>
+    <h1 text-center>Signing Up</h1>
   </div>
 	<ion-item text-wrap no-lines style="background: transparent; color: white">
 		<div text-center>
@@ -25,7 +28,7 @@
 		<h1 text-center style="font-family: 'Ubuntu', sans-serif;">
   			Hi there, sign up below
   		</h1>
-      <p text-center>And we will take care of the rest...</p>
+      <p text-center>And we will take care of your accommodation needs...</p>
   	</ion-item>
   	<form margin-top margin-bottom>
   		<ion-item padding style="background: transparent; color: white">
@@ -40,7 +43,7 @@
   			<ion-label stacked>Email</ion-label>
   			<ion-input type="email" [(ngModel)]="seeker.email" name="email" autocomplete="email" autocorrect="off"></ion-input>
   		</ion-item>
-  		<ion-item no-lines padding style="background: transparent; color: white">
+  		<ion-item padding style="background: transparent; color: white">
   			<ion-label stacked>Password</ion-label>
   			<ion-input type="password" [(ngModel)]="password" name="pword"></ion-input>
   		</ion-item>

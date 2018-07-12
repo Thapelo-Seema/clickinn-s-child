@@ -20,9 +20,13 @@
 	  		<button ion-button color="secondary" (click)="signin()">Login</button>
 	  		<button ion-button clear (click)="signup()">Create An Account</button>
 	  	</ion-buttons>
-	  	<button ion-button full clear padding margin color="silver">Forgot your password</button>
+	  	<ion-buttons start>
+	  		<button ion-button small clear margin-vertical color="silver">Forgot password ?</button>
+	  	</ion-buttons>
 	</div>
-	<div *ngIf="loading" class="centered_on_screen" style="background: #000010; color: white; font-size: 35">
-		Login... &nbsp;&nbsp;&nbsp;&nbsp;<ion-spinner name="ios"></ion-spinner>
+	<div *ngIf="loading" class="centered_on_screen" 
+	style="background: rgba(0, 0, 0, 0.8); color: white; font-size: 35; border-radius: 10px; padding: 20px; text-align: center;">
+		<ion-spinner name="ios"></ion-spinner>
+		<h1 text-center>Signing In</h1>
 	</div>
 </ion-content>

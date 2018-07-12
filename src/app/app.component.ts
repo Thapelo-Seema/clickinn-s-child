@@ -5,6 +5,14 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { User } from '../models/users/user.interface';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { ErrorHandlerProvider } from '../providers/error-handler/error-handler';
+import { LoginPage } from '../pages/login/login';
+import { ProfilePage } from '../pages/profile/profile';
+import { UploadAndEarnPage } from '../pages/upload-and-earn/upload-and-earn';
+import { WelcomePage } from '../pages/welcome/welcome';
+import { AgentDashboardPage } from '../pages/agent-dashboard/agent-dashboard';
+import { BursaryPlacementsPage } from '../pages/bursary-placements/bursary-placements';
+import { CaretakerManagerDashboardPage } from '../pages/caretaker-manager-dashboard/caretaker-manager-dashboard';
+import { LandlordDashboardPage } from '../pages/landlord-dashboard/landlord-dashboard';
 
 import 'rxjs/add/operator/take';
 
@@ -12,7 +20,7 @@ import 'rxjs/add/operator/take';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:string;
+  rootPage:any;
   loading: boolean = true;
   user: User;
   authState: any;
@@ -52,19 +60,43 @@ export class MyApp {
   //Navigate to the users profile
   gotoProfile(){
     this.loading = true;
-    this.navCtrl.push('ProfilePage').then(() =>{
+    this.navCtrl.push(ProfilePage).then(() =>{
       this.loading = false;
     });
+  }
+
+  gotoAgentDash(){
+    this.loading = true;
+    this.navCtrl.push(AgentDashboardPage)
+    this.loading = false;
+  }
+
+  gotoBursaryDash(){
+    this.loading = true;
+    this.navCtrl.push(BursaryPlacementsPage);
+    this.loading = false;
+  }
+
+  gotoCaretakerDash(){
+    this.loading = true;
+    this.navCtrl.push(CaretakerManagerDashboardPage);
+    this.loading = false;
+  }
+
+  gotoLandlordDash(){
+    this.loading = true;
+    this.navCtrl.push(LandlordDashboardPage);
+    this.loading = false;
   }
   //Change the users authState, remove the users local copy
   logout(){
     this.afAuth.auth.signOut().then(() =>{
-      this.navCtrl.setRoot('LoginPage');  
+      this.navCtrl.setRoot(LoginPage);  
     }) 
   }
   //Navigate to the upload and earn page
   uploadAndEarn(){
-    this.navCtrl.push('UploadAndEarnPage');
+    this.navCtrl.push(UploadAndEarnPage);
   }
   //Navigates the user their appropriate homepage at startup
   navigateUser(user: User){
@@ -72,33 +104,33 @@ export class MyApp {
       switch(user.user_type){
         case 'seeker':{
           //Navigate to welcome page
-          this.rootPage = 'WelcomePage';
+          this.rootPage = WelcomePage;
           break;
         }
         case 'host':{
           //Navigate to host dashboard
-          this.rootPage = 'WelcomePage';
+          this.rootPage = WelcomePage;
           break;
         }
         case 'support':{
           //Navigate to support interface
-          this.rootPage = 'WelcomePage';
+          this.rootPage = WelcomePage;
           break;
         }
         case 'tenant':{
           //Navigate to home
-          this.rootPage = 'WelcomePage';
+          this.rootPage = WelcomePage;
           break;
         }
         case 'Thapelo':{
           //Navigate to master
-          this.rootPage = 'WelcomePage';
+          this.rootPage = WelcomePage;
           break;
         }
       }
     }else{
       //Navigate to welcome page
-      this.rootPage = 'WelcomePage';
+      this.rootPage = WelcomePage;
     }
   }
   //Check for authState and sync user data if possible
@@ -124,7 +156,7 @@ export class MyApp {
       })
     }
     else{
-      this.rootPage = 'LoginPage';
+      this.rootPage = LoginPage;
       this.loading = false;
       return;
     }
@@ -137,7 +169,7 @@ export class MyApp {
         this.loading = false;
       }
       else{
-        this.rootPage = "LoginPage";
+        this.rootPage = LoginPage;
         this.loading = false;
         return;
       }
@@ -202,7 +234,7 @@ export class MyApp {
         }
       }
       else if(user == null){
-        this.navCtrl.setRoot('LoginPage');
+        this.navCtrl.setRoot(LoginPage);
         this.loading = false;  
       }else{
         this.loading = false;

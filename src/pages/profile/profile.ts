@@ -4,6 +4,7 @@ import { LocalDataProvider } from '../../providers/local-data/local-data';
 import { User } from '../../models/users/user.interface';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { ErrorHandlerProvider } from '../../providers/error-handler/error-handler';
+import { EditProfilePage } from '../edit-profile/edit-profile';
 /**
  * Generated class for the ProfilePage page.
  *
@@ -45,7 +46,7 @@ export class ProfilePage {
   }
 
   gotoEdit(){
-    this.navCtrl.push('EditProfilePage');
+    this.navCtrl.push(EditProfilePage);
   }
 
 }

@@ -16,7 +16,7 @@
 	  			<ion-icon name="ios-create" start></ion-icon> &nbsp;&nbsp; Edit</button>
 	  	</ion-buttons>
 		<div text-center>
-			<img src="{{image}}" class="round" alt="User display picture" />
+			<img src="{{image}}" class="round" width="200px" height="200px" alt="User display picture" />
 		</div>
 		<h1 text-center>	
 	  		{{user?.displayName}} 
@@ -25,27 +25,27 @@
  	
   	<div padding>
       <ion-item>
-        <h2>Display Name</h2>
+        <h3>Display Name</h3>
         <p>{{user?.displayName ? user?.displayName: 'none provided'}}</p>
       </ion-item>
   		<ion-item>
-  			<h2>Firstname</h2>
+  			<h3>Firstname</h3>
   			<p>{{user?.firstname ? user?.firstname: 'none provided'}}</p>
   		</ion-item>
   		<ion-item>
-  			<h2>Lastname</h2>
+  			<h3>Lastname</h3>
   			<p>{{user?.lastname ? user?.lastname: 'none provided'}}</p>
   		</ion-item>
   		<ion-item>
-  			<h2>Email</h2>
+  			<h3>Email</h3>
   			<p>{{user?.email ? user?.email: 'none provided'}}</p>
   		</ion-item>
   		<ion-item>
-  			<h2>Phone</h2>
+  			<h3>Phone</h3>
   			<p>{{user?.phoneNumber ? user?.phoneNumber: 'none provided'}}</p>
   		</ion-item>
   		<ion-item>
-  			<h2>User role</h2>
+  			<h3>User role</h3>
   			<p>{{user?.user_type ? user?.user_type: 'none provided'}}</p>
   		</ion-item>
   	</div>

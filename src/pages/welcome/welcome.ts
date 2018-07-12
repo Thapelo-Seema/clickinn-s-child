@@ -6,6 +6,8 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { LocalDataProvider } from '../../providers/local-data/local-data';
 import { User } from '../../models/users/user.interface';
 import { ErrorHandlerProvider } from '../../providers/error-handler/error-handler';
+import { PrefferencesPage } from '../prefferences/prefferences';
+import { AlertPage } from '../alert/alert';
 
 declare var google: any;
 
@@ -57,7 +59,7 @@ export class WelcomePage {
       return;
     }
     this.storage.setPOI(this.pointOfInterest).then(data =>{
-      this.navCtrl.push('PrefferencesPage');
+      this.navCtrl.push(PrefferencesPage);
     })
     .catch(err => {
       this.errHandler.handleError(err);
@@ -103,7 +105,6 @@ export class WelcomePage {
     this.map_svc.getSelectedPlace(place).then(data => {
       this.pointOfInterest = data;
       this.predictions = [];
-      this.nextPage();
       this.loading = false;
     })
     .catch(err => {
@@ -117,7 +118,7 @@ export class WelcomePage {
       title: title,
       message: message
     }
-    let warningModal = this.alert.create('AlertPage', {data: myData})
+    let warningModal = this.alert.create(AlertPage, {data: myData})
     warningModal.present();
   }
 

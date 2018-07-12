@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, ToastController } from 'ionic-angular';
 import { DatePicker } from '@ionic-native/date-picker';
 import { User } from '../../models/users/user.interface';
-import { LocalDataProvider } from '../../providers/local-data/local-data'
+import { LocalDataProvider } from '../../providers/local-data/local-data';
+import { AlertPage } from '../alert/alert';
 
 /**
  * Generated class for the PaymentDetailsPage page.
@@ -57,7 +58,7 @@ export class PaymentDetailsPage {
       title: title,
       message: message
     }
-    let warningModal = this.alert.create('AlertPage', {data: myData})
+    let warningModal = this.alert.create(AlertPage, {data: myData})
     warningModal.present();
   }
 

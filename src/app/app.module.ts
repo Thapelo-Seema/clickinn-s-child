@@ -24,6 +24,38 @@ import { DocumentViewer } from '@ionic-native/document-viewer';
 import { File } from '@ionic-native/file';
 import { FileTransfer } from '@ionic-native/file-transfer';
 
+//import custom pages
+
+import { AlertPageModule } from '../pages/alert/alert.module';
+import { ApartmentDetailsPageModule } from '../pages/apartment-details/apartment-details.module'
+import { AppointmentPageModule } from '../pages/appointment/appointment.module';
+import { BookingsPageModule } from '../pages/bookings/bookings.module';
+import { ConfirmationPageModule } from '../pages/confirmation/confirmation.module';
+import { EditProfilePageModule } from '../pages/edit-profile/edit-profile.module';
+import { FavouritesPageModule } from '../pages/favourites/favourites.module';
+import { HomePageModule } from '../pages/home/home.module';
+import { InfoPageModule } from '../pages/info/info.module';
+import { LeasePageModule } from '../pages/lease/lease.module';
+import { LoginPageModule } from '../pages/login/login.module';
+import { PaymentDetailsPageModule } from '../pages/payment-details/payment-details.module';
+import { PrefferencesPageModule } from '../pages/prefferences/prefferences.module';
+import { ProfilePageModule } from '../pages/profile/profile.module';
+import { SecurePageModule } from '../pages/secure/secure.module';
+import { SeekingPageModule } from '../pages/seeking/seeking.module';
+import { SignupPageModule } from '../pages/signup/signup.module';
+import { UploadAndEarnPageModule } from '../pages/upload-and-earn/upload-and-earn.module';
+import { VirtualViewingPageModule } from '../pages/virtual-viewing/virtual-viewing.module';
+import { WelcomePageModule } from '../pages/welcome/welcome.module';
+import { AgentDashboardPageModule } from '../pages/agent-dashboard/agent-dashboard.module';
+import { BursaryPlacementsPageModule } from '../pages/bursary-placements/bursary-placements.module';
+import { LandlordDashboardPageModule } from '../pages/landlord-dashboard/landlord-dashboard.module';
+import { CaretakerManagerDashboardPageModule } from '../pages/caretaker-manager-dashboard/caretaker-manager-dashboard.module';
+import { SearchfeedPageModule } from '../pages/searchfeed/searchfeed.module';
+import { ChatsPageModule } from '../pages/chats/chats.module';
+import { ManageBuildingsPageModule } from '../pages/manage-buildings/manage-buildings.module';
+import { ComponentsModule } from '../components/components.module';
+
+
 
 export const firebaseConfig = {
     apiKey: "AIzaSyDT6HDi-pzKJDKGIUmBqz75ti-SMVzt0tY",
@@ -36,7 +68,7 @@ export const firebaseConfig = {
 
 @NgModule({
   declarations: [
-    MyApp
+    MyApp, 
   ],
   imports: [
     BrowserModule,
@@ -50,11 +82,19 @@ export const firebaseConfig = {
     IonicStorageModule.forRoot(), 
     IonicImageViewerModule,
     IonicStepperModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    WelcomePageModule,
+    AlertPageModule, AppointmentPageModule, BookingsPageModule, ConfirmationPageModule, EditProfilePageModule,
+    FavouritesPageModule, HomePageModule, InfoPageModule, LeasePageModule, LoginPageModule, PaymentDetailsPageModule, 
+    PrefferencesPageModule,
+    ProfilePageModule, SecurePageModule, SeekingPageModule, SignupPageModule, UploadAndEarnPageModule, VirtualViewingPageModule, 
+    ComponentsModule, AgentDashboardPageModule, BursaryPlacementsPageModule, LandlordDashboardPageModule,
+    CaretakerManagerDashboardPageModule, SearchfeedPageModule, ChatsPageModule, ManageBuildingsPageModule,
+    ApartmentDetailsPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp
+    MyApp 
   ],
   providers: [
    Geolocation, Calendar, DatePicker, Camera, DocumentViewer, File, FileTransfer, 

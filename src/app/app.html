@@ -6,7 +6,7 @@
 	<ion-content>
 		<ion-item text-wrap no-lines style="background: #000030; color: white">
 		    <ion-avatar item-left>
-		      <img src="{{user?.photoURL}}" class="round"/>
+		      <img src="{{user?.photoURL ? user?.photoURL: 'assets/imgs/placeholder.png'}}" class="round"/>
 		    </ion-avatar>
 		    <h1 text-center>
 		        {{user?.displayName}}
@@ -26,6 +26,22 @@
 		      <button ion-item menuClose color="secondary" (click)="uploadAndEarn()" >
 		        <ion-icon name="ios-cloud-upload-outline" item-end></ion-icon>
 		        Upload &amp; Earn
+		      </button>
+		      <button ion-item menuClose  (click)="gotoLandlordDash()" >
+		        <ion-icon name="ios-cloud-upload-outline" item-end></ion-icon>
+		        Landlord 
+		      </button>
+		      <button ion-item menuClose  (click)="gotoCaretakerDash()" >
+		        <ion-icon name="ios-cloud-upload-outline" item-end></ion-icon>
+		        Caretaker/Manager
+		      </button>
+		      <button ion-item menuClose  (click)="gotoAgentDash()" >
+		        <ion-icon name="ios-cloud-upload-outline" item-end></ion-icon>
+		        Agent 
+		      </button>
+		      <button ion-item menuClose  (click)="gotoBursaryDash()" >
+		        <ion-icon name="ios-cloud-upload-outline" item-end></ion-icon>
+		        Bursary placements
 		      </button>
 		      <button ion-item menuClose (click)="logout()">
 		        Logout

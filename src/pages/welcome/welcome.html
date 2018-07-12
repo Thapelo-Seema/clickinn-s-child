@@ -25,6 +25,12 @@
 		<ion-list *ngIf="predictions">
 			<button ion-item *ngFor="let pred of predictions" (click)="selectPlace(pred)">{{pred?.description}}</button>
 		</ion-list>
+    <ion-buttons text-center>
+      <button ion-button margin-vertical padding-horizontal round outline (click)="nextPage()">
+        Next &nbsp;&nbsp;&nbsp;&nbsp;
+          <ion-icon name="arrow-round-forward"></ion-icon>
+      </button>
+    </ion-buttons>
 	</div>
 </ion-content>
 
