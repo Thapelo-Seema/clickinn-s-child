@@ -10,6 +10,7 @@ import { storage } from 'firebase';
 import { AngularFireStorage } from 'angularfire2/storage'
 import { FileUpload } from '../../models/file-upload.interface';
 import { Image } from '../../models/image.interface';
+import { ObjectInitProvider } from '../../providers/object-init/object-init';
 
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/takeLast';
@@ -21,39 +22,21 @@ import 'rxjs/add/operator/takeLast';
 })
 export class EditProfilePage {
 
-  user: User = {
-      email: '',
-      firstname: '',
-      lastname: '',
-      displayName: '',
-      is_host: false,
-      user_type: 'seeker',
-      uid: '',
-      fcm_token: '',
-      phoneNumber: '',
-      photoURL: '',
-      status: false,
-      threads: {}
-    }	//the current user
+  user: User;
   image: any = "assets/imgs/placeholder.png";
   loading: boolean = false;
   dpChanged: boolean = false;
-  recentDp: FileUpload ={
-    file: null,
-    name: '',
-    url: '',
-    progress: 0,
-    path: 'UserDisplayImages'
-  }
+  recentDp: FileUpload;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private storage: LocalDataProvider,
   	private toast: ToastController, private afs: AngularFirestore, private errHandler: ErrorHandlerProvider,
-    private camera: Camera, private afstorage: AngularFireStorage){
-    this.loading = true;
+    private camera: Camera, private afstorage: AngularFireStorage, private object_init: ObjectInitProvider){
+    this.user = this.object_init.initializeUser();
+    this.recentDp = this.object_init.initializeFileUpload();
+      this.loading = true;
   		this.storage.getUser().then(data =>{
 	  		this.user = data;
-        console.log('User: ', this.user);
-	  		if(this.user.photoURL !== '') this.image = this.user.photoURL;
+	  		if(this.user.photoURL !== '' || this.user.photoURL == undefined) this.image = this.user.photoURL;
         this.loading = false;
 	  }).catch(err => {
       this.errHandler.handleError(err);
@@ -62,18 +45,22 @@ export class EditProfilePage {
   }
 
   save(){
+    this.loading = true;
     if(!this.dpChanged){
       this.persistChanges();
-    }
-    this.loading = true;
-    this.uploadDp().then(image =>{
-      this.user.photoURL = image.url;
-      this.persistChanges();
-    }).catch(err => {
-        this.errHandler.handleError(err);
+      this.loading = false;
+    }else{
+      this.uploadDp()
+      .then(image =>{
+        this.user.photoURL = image.url;
+        this.persistChanges();
         this.loading = false;
       })
-    
+      .catch(err => {
+          this.errHandler.handleError(err);
+          this.loading = false;
+      })
+    }
   }
   //Select or take a picture from the galley
   changeDp(){

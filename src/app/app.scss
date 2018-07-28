@@ -56,6 +56,8 @@
 
 ion-content{
 	font-family: 'Raleway', sans-serif;
+  padding: 0;
+  margin: 0;
 }
 
 
@@ -74,8 +76,8 @@ ion-spinner{
 .centered_on_screen{
 	position: fixed;
  	top: 50%;
-  	left: 50%;
-  	transform: translate(-50%, -50%);
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .full_width{

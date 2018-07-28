@@ -12,14 +12,8 @@ export interface Property{
 	wifi: boolean;
 	parking: boolean;
 	prepaid_elec: boolean;
-	country_long?: string;
-	country_short?: string;
-	lat?: number;
-	lng?: number;
-	name?: string;
 	address: Address;
 	timeStamp: number;
 	user_id: string
-	vicinity?: string;
 	nearbys?: string[];
 }

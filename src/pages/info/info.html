@@ -16,21 +16,21 @@
 	<ion-list>
 		<ion-item text-wrap no-lines>
 			<ion-avatar item-start>
-				<img src="{{apartment?.dP?.url}}"/>
+				<img src="{{apartment?.dP?.url}}" imageViewer/>
 			</ion-avatar>
 			<h1>{{apartment?.room_type}}</h1>
 			<p>{{apartment?.description}}</p><br/>
 			<p>{{apartment?.property?.common}}</p>
 		</ion-item>
-		<ion-slides class="image-slider" loop="true" slidesPerView="2" >
+		<ion-slides class="image-slider" loop="true" slidesPerView="2" style="max-height: 150px; overflow-y: hidden;">
 			<ion-slide *ngFor="let image of images">
-				<img src="{{image.url}}" width="200px" height="100px" class="thumb-img" imageViewer />
+				<img src="{{image?.url}}" class="thumb-img" imageViewer />
 			</ion-slide>
 		</ion-slides>
 		<h2 text-center>More info</h2>
 		<ion-item text-wrap>
 			<ion-icon name='walk' color="light-gray" item-start></ion-icon>
-			<h2>This place is within a 10 min walk to</h2> 
+			<h2>Places within a 10 min walk</h2> 
 			<ion-list>
 				<h4 *ngFor="let place of apartment?.property?.nearbys"> {{place}} </h4>
 			</ion-list>
@@ -40,7 +40,7 @@
 			Deposit <ion-note item-end>R{{apartment?.deposit}}</ion-note>
 		</ion-item>
 		<ion-item>
-			<ion-icon name='logo-usd' color="light-gray" item-start></ion-icon>
+			<ion-icon name='paper' color="light-gray" item-start></ion-icon>
 	       	Monthly rent <ion-note item-end> R{{apartment?.price}}</ion-note>
 		</ion-item>
 		<ion-item>

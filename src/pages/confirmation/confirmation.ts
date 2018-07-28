@@ -1,12 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
-
-/**
- * Generated class for the ConfirmationPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { ObjectInitProvider } from '../../providers/object-init/object-init';
 
 @IonicPage()
 @Component({
@@ -14,12 +8,13 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
   templateUrl: 'confirmation.html',
 })
 export class ConfirmationPage {
-  confirmation ={
+  confirmation = {
 		title: 'string',
  		message: 'string'
   }
 	
-  constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController,
+    private object_init: ObjectInitProvider) {
   }
 
   ionViewWillLoad() {

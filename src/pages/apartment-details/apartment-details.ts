@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController } from 'ionic-angular';
 import { InfoPage } from '../info/info';
 import { AppointmentPage } from '../appointment/appointment';
 import { SecurePage } from '../secure/secure';
+import { WelcomePage } from '../welcome/welcome';
 
 @IonicPage()
 @Component({
@@ -10,18 +11,15 @@ import { SecurePage } from '../secure/secure';
   templateUrl: 'apartment-details.html',
 })
 export class ApartmentDetailsPage{
-  tab1Root: any;
-  tab2Root: any;
-  tab3Root: any;
+  tab1Root: any = InfoPage;
+  tab2Root: any = AppointmentPage;
+  tab3Root: any = SecurePage;
  
-  constructor(public navCtrl: NavController, public navParams: NavParams){
-  	this.tab1Root = InfoPage;
-  	this.tab2Root = AppointmentPage;
-  	this.tab3Root = SecurePage;
+  constructor(public navCtrl: NavController){
   }
 
   gotoHome(){
-    this.navCtrl.pop();
+    this.navCtrl.push(WelcomePage)
   }
   
 }

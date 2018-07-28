@@ -4,6 +4,7 @@ import { SearchfeedPage } from '../searchfeed/searchfeed';
 import { ChatsPage } from '../chats/chats';
 import { BookingsPage } from '../bookings/bookings';
 import { ManageBuildingsPage } from '../manage-buildings/manage-buildings';
+import { WelcomePage } from '../welcome/welcome';
 /**
  * Generated class for the CaretakerManagerDashboardPage page.
  *
@@ -26,6 +27,10 @@ export class CaretakerManagerDashboardPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CaretakerManagerDashboardPage');
+  }
+
+  gotoHome(){
+    this.navCtrl.push(WelcomePage)
   }
 
 }

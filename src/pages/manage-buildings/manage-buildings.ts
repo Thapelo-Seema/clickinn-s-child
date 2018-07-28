@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ObjectInitProvider } from '../../providers/object-init/object-init';
 
 /**
  * Generated class for the ManageBuildingsPage page.
@@ -15,7 +16,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ManageBuildingsPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private object_init: ObjectInitProvider) {
   }
 
   ionViewDidLoad() {

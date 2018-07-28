@@ -7,14 +7,9 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { ErrorHandlerProvider } from '../../providers/error-handler/error-handler';
 import { AlertPage } from '../alert/alert';
 import { SeekingPage } from '../seeking/seeking';
-//import { AngularFireAuth } from 'angularfire2/auth';
-
-/**
- * Generated class for the PrefferencesPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { AngularFireAuth } from 'angularfire2/auth';
+import { ObjectInitProvider } from '../../providers/object-init/object-init';
+import { User } from '../../models/users/user.interface';
 
 @IonicPage()
 @Component({
@@ -23,26 +18,25 @@ import { SeekingPage } from '../seeking/seeking';
 })
 export class PrefferencesPage {
 
- private search_object: Search = {
-    apartment_type: 'Any',
-    nsfas: false,
-    parking: false,
-    laundry: false,
-    wifi: false,
-    maxPrice: null,
-    minPrice: 0,
-    Address: null,
-    timeStamp: 0
-   };
- 
+  search_object: Search;
   pointOfInterest: Address ;
   more: boolean = false;
   loading: boolean = false;
+  user: User;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alert: ModalController,  
   	private storage: LocalDataProvider, private afs: AngularFirestore,
-    private errHandler: ErrorHandlerProvider) {
-  	this.storage.getPOI().then(data => this.pointOfInterest = data)
+    private errHandler: ErrorHandlerProvider, private afAuth: AngularFireAuth, private object_init: ObjectInitProvider){
+    this.user = this.object_init.initializeUser();
+    this.pointOfInterest = this.object_init.initializeAddress();
+    this.search_object = this.object_init.initializeSearch();
+    this.storage.getUser().then(user => this.user = user)
+    .catch(err => {
+      this.errHandler.handleError(err);
+      this.loading = false;
+    })
+  	this.storage.getPOI()
+    .then(data => this.pointOfInterest = data)
     .catch(err => {
       this.errHandler.handleError(err);
       this.loading = false;
@@ -54,10 +48,13 @@ export class PrefferencesPage {
      if(this.search_object.maxPrice == 0 || this.search_object.maxPrice == null){
       this.showWarnig(
           'Price limit not set!',
-          'Please enter the maximum price.'
+          'The maximum price (rent) must be entered before you can proceed.'
         );
+      this.loading = false;
       return;
     }
+    this.search_object.searcher_id = this.user.uid;
+    this.search_object.searcher_name = this.user.firstname + ' ' + this.user.lastname;
     this.search_object.Address = this.pointOfInterest;
     this.search_object.maxPrice = Number(this.search_object.maxPrice);
     this.search_object.minPrice = Number(this.search_object.minPrice);

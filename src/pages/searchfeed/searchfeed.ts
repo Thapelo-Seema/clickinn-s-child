@@ -1,12 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the SearchfeedPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { ObjectInitProvider } from '../../providers/object-init/object-init';
+import { SearchfeedProvider } from '../../providers/searchfeed/searchfeed';
+import { Observable } from 'rxjs';
+import { Search } from '../../models/search.interface';
 
 @IonicPage()
 @Component({
@@ -15,11 +12,17 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class SearchfeedPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  searches: Observable<Search[]>;
+  search: Search;
+  constructor(public navCtrl: NavController, public navParams: NavParams, private object_init: ObjectInitProvider,
+  	private searchfeed_svc: SearchfeedProvider){
+  	this.searches = this.searchfeed_svc.getAllSearches();
+  	this.search = this.object_init.initializeSearch();
   }
 
+
   ionViewDidLoad() {
-    console.log('ionViewDidLoad SearchfeedPage');
+   // console.log('ionViewDidLoad SearchfeedPage');
   }
 
 }

@@ -4,13 +4,7 @@ import { SearchfeedPage } from '../searchfeed/searchfeed';
 import { ChatsPage } from '../chats/chats';
 import { BookingsPage } from '../bookings/bookings';
 import { ManageBuildingsPage } from '../manage-buildings/manage-buildings';
-
-/**
- * Generated class for the LandlordDashboardPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { WelcomePage } from '../welcome/welcome';
 
 @IonicPage()
 @Component({
@@ -27,6 +21,10 @@ export class LandlordDashboardPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LandlordDashboardPage');
+  }
+
+  gotoHome(){
+    this.navCtrl.push(WelcomePage)
   }
 
 }

@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, AlertController } from 'ionic-angular';
 import { Apartment } from '../../models/properties/apartment.interface';
 import { LocalDataProvider } from '../../providers/local-data/local-data';
 import { ErrorHandlerProvider } from '../../providers/error-handler/error-handler';
 import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer';
 import { File } from '@ionic-native/file';
 import { FileTransfer } from '@ionic-native/file-transfer';
-
+import { ObjectInitProvider } from '../../providers/object-init/object-init';
 
 /**
  * Generated class for the SecurePage page.
@@ -21,25 +21,14 @@ import { FileTransfer } from '@ionic-native/file-transfer';
   templateUrl: 'secure.html',
 })
 export class SecurePage {
-  apartment: Apartment = {
-    available: true,
-    dP: {name: 'placeholder', path: 'path', progress: 0,url: "assets/imgs/placeholder.jpg"},
-    deposit: 0,
-    description: 'loading...',
-    apart_id: '',
-    images: [],
-    price: 0,
-    prop_id: '',
-    room_type: 'loading...',
-    type: 'loading...',
-    timeStamp: 0
-  }
+  apartment: Apartment;
   reference: string = '';
   loading: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController,
+  constructor(public navCtrl: NavController, private alertCtrl: AlertController,
     private storage: LocalDataProvider, private errHandler: ErrorHandlerProvider, private file: File, private fileTransfer: FileTransfer,
-    private document: DocumentViewer){
+    private document: DocumentViewer, private object_init: ObjectInitProvider){
+    this.apartment = this.object_init.initializeApartment();
   }
 
   ionViewWillLoad(){
@@ -59,6 +48,15 @@ export class SecurePage {
     let alert = this.alertCtrl.create({
       title: 'Reference generated',
       subTitle: 'Your payment reference is generated and expires 2 hours from now',
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+
+  comingSoon(){
+    let alert = this.alertCtrl.create({
+      title: 'Coming Soon!',
+      subTitle: 'This feature is still under construction, please use the ATM or Bank deposits to complete payments',
       buttons: ['OK']
     });
     alert.present();

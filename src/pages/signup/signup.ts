@@ -7,12 +7,7 @@ import { User } from '../../models/users/user.interface'
 import { ErrorHandlerProvider } from '../../providers/error-handler/error-handler';
 import { LoginPage } from '../login/login';
 import { WelcomePage } from '../welcome/welcome';
-/**
- * Generated class for the SignupPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { ObjectInitProvider } from '../../providers/object-init/object-init';
 
 @IonicPage()
 @Component({
@@ -25,23 +20,10 @@ export class SignupPage {
 	password: string;
   loading: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(public navCtrl: NavController,
     private afs: AngularFirestore, private afAuth: AngularFireAuth, private storage: LocalDataProvider,
-     private errHandler: ErrorHandlerProvider) {
-  	this.seeker = {
-      email: '',
-      displayName: '',
-      firstname: '',
-      lastname: '',
-      is_host: false,
-      user_type: 'seeker',
-      uid: '',
-      fcm_token: '',
-      phoneNumber: '',
-      photoURL: '',
-      status: false,
-      threads: {}
-    }
+     private errHandler: ErrorHandlerProvider, private object_init: ObjectInitProvider) {
+  	this.seeker = this.object_init.initializeUser();
   }
 
   signup(){

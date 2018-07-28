@@ -4,9 +4,9 @@ import { Apartment } from '../../models/properties/apartment.interface';
 import { LocalDataProvider } from '../../providers/local-data/local-data';
 import { Image } from '../../models/image.interface';
 import { AccommodationsProvider } from '../../providers/accommodations/accommodations';
-import { Duration } from '../../models/location/duration.interface';
 import { Address } from '../../models/location/address.interface';
 import { ErrorHandlerProvider } from '../../providers/error-handler/error-handler';
+import { ObjectInitProvider } from '../../providers/object-init/object-init';
 
 @IonicPage()
 @Component({
@@ -15,39 +15,15 @@ import { ErrorHandlerProvider } from '../../providers/error-handler/error-handle
 })
 export class InfoPage {
 
-  apartment: Apartment = {
-    available: true,
-    dP: {name: 'placeholder', path: 'path', progress: 0,url: "assets/imgs/placeholder.jpg"},
-    deposit: 0,
-    description: 'loading...',
-    apart_id: '',
-    images: [
-      {name: 'placeholder', path: 'path', progress: 0,url: "assets/imgs/placeholder.jpg"},
-      {name: 'placeholder', path: 'path', progress: 0,url: "assets/imgs/placeholder.jpg"},
-      {name: 'placeholder', path: 'path', progress: 0,url: "assets/imgs/placeholder.jpg"},
-      {name: 'placeholder', path: 'path', progress: 0,url: "assets/imgs/placeholder.jpg"},
-      {name: 'placeholder', path: 'path', progress: 0,url: "assets/imgs/placeholder.jpg"}
-    ],
-    price: 0,
-    prop_id: '',
-    room_type: 'loading...',
-    type: 'loading...',
-    timeStamp: 0
-  }
-  walkingDuration: Duration;
+  apartment: Apartment;
   adjustedDuration: number = 0;
-  pointOfInterest: Address = null;
+  pointOfInterest: Address ;
   images: Image[] = [];
   loading: boolean = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, private storage: LocalDataProvider, 
-  	private accom_svc: AccommodationsProvider, private errHandler: ErrorHandlerProvider) {
-    this.images = [
-      {name: 'placeholder', path: 'path', progress: 0,url: "assets/imgs/placeholder.jpg"},
-      {name: 'placeholder', path: 'path', progress: 0,url: "assets/imgs/placeholder.jpg"},
-      {name: 'placeholder', path: 'path', progress: 0,url: "assets/imgs/placeholder.jpg"},
-      {name: 'placeholder', path: 'path', progress: 0,url: "assets/imgs/placeholder.jpg"},
-      {name: 'placeholder', path: 'path', progress: 0,url: "assets/imgs/placeholder.jpg"}
-      ];
+  	private accom_svc: AccommodationsProvider, private errHandler: ErrorHandlerProvider, private object_init: ObjectInitProvider) {
+      this.apartment = this.object_init.initializeApartment();
+      this.pointOfInterest = this.object_init.initializeAddress();
   }
 
   ionViewWillLoad(){
@@ -69,6 +45,7 @@ export class InfoPage {
       this.images = Object.keys(data.images).map(imageId =>{
         return data.images[imageId]
       })
+      console.log(this.images);
   	})
     .catch(err => {
       this.errHandler.handleError(err);

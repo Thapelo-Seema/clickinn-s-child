@@ -9,7 +9,6 @@
     <ion-title style="font-family: 'Ubuntu', sans-serif;">Payment - {{payment_method ? payment_method : 'loading...'}}</ion-title>
   </ion-navbar>
 </ion-header>
-
 <ion-content *ngIf="payment_method !== 'deposit'" padding>
 	<ion-item padding>
 	  <ion-label>Bank</ion-label>
@@ -38,9 +37,9 @@
 	<p>Use the refference number provided below when you deposit and confirm your deposit on the app once done.</p>
 	
 	<ion-item>
-		<h2 text-center>Banking details</h2>
+		<h1 text-center>Banking details</h1>
 		<h3>Bank</h3>
-		<p>FNB</p>
+		<p>Standard Bank</p>
 		<h3>Account holder</h3>
 		<p>Metalojiq Solutions Pty(Ltd)</p>
 		<h3>Account Number</h3>
@@ -50,5 +49,5 @@
 		<h2>Refference</h2>
 		<p>{{refference ? refference: 'No refference'}}</p>
 	</ion-item>
-	<button ion-button block (click)="generateRef()" >Generate refference</button>
+	<button ion-button block >Generate refference</button>
 </ion-content>

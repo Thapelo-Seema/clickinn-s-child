@@ -1,11 +1,8 @@
+import { User } from './user.interface';
+import { Address } from '../location/address.interface';
+
 export interface Tenant{
-	firstname: string;
-	lastname: string;
-	uid: string;
-	age: number;
-	occupation: string;
-	identity_no: string;
-	cellphone: string;
-	email: string;
-	rating: number;
+	profile: User;
+	address: Address;
+	reviews?: {reviewer_name: string, reviewer_id: string, comment: string }[]
 }

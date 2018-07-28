@@ -1,5 +1,5 @@
 import { Component} from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController} from 'ionic-angular';
+import { IonicPage, NavController, ModalController} from 'ionic-angular';
 import { MapsProvider } from '../../providers/maps/maps';
 import { Address } from '../../models/location/address.interface';
 import { AngularFirestore } from 'angularfire2/firestore';
@@ -8,6 +8,7 @@ import { User } from '../../models/users/user.interface';
 import { ErrorHandlerProvider } from '../../providers/error-handler/error-handler';
 import { PrefferencesPage } from '../prefferences/prefferences';
 import { AlertPage } from '../alert/alert';
+import { ObjectInitProvider } from '../../providers/object-init/object-init';
 
 declare var google: any;
 
@@ -19,20 +20,17 @@ declare var google: any;
 export class WelcomePage {
   //statusMessage: string = '';
   predictions: any[] = [];
-  pointOfInterest: Address = {
-     lat: 0,
-     lng: 0,
-     description: '',
-     country_long: '',
-     country_short: ''
-  };
+  pointOfInterest: Address;
   user: User;
   loading: boolean = false;
   service = new google.maps.places.AutocompleteService();
-  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: LocalDataProvider,
+  constructor(public navCtrl: NavController, private storage: LocalDataProvider,
   private map_svc: MapsProvider, private alert: ModalController, private afs: AngularFirestore, 
-  private errHandler: ErrorHandlerProvider){
+  private errHandler: ErrorHandlerProvider, private object_init: ObjectInitProvider){
     this.loading = true;
+    this.user = this.object_init.initializeUser();
+    this.pointOfInterest = this.object_init.initializeAddress();
+    this.pointOfInterest.description = '';
     this.storage.getUser().then(data =>{
         this.afs.collection('Users').doc<User>(data.uid).valueChanges().subscribe(user =>{
           this.user = user;
@@ -53,8 +51,8 @@ export class WelcomePage {
   nextPage(){
     if(this.pointOfInterest.lat == 0 && this.pointOfInterest.lng == 0){
       this.showWarnig(
-        'Point of interest required!',
-        'Please enter the name of your institution or the area where you want us to search.'
+        'Enter area or institution!',
+        'Please enter the name of your institution or the area (city) where you want us to search for your accommodation.'
         )
       return;
     }

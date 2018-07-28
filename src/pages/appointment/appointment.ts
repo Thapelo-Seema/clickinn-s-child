@@ -9,7 +9,8 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { Appointment } from '../../models/appointment.interface';
 import { User } from '../../models/users/user.interface';
 import { ErrorHandlerProvider } from '../../providers/error-handler/error-handler';
-import { ConfirmationPage } from '../confirmation/confirmation'
+import { ConfirmationPage } from '../confirmation/confirmation';
+import { ObjectInitProvider } from '../../providers/object-init/object-init';
 
 
 @IonicPage()
@@ -18,50 +19,19 @@ import { ConfirmationPage } from '../confirmation/confirmation'
   templateUrl: 'appointment.html',
 })
 export class AppointmentPage {
-  apartment: Apartment = {
-    available: true,
-    dP: {name: 'placeholder', path: 'path', progress: 0,url: "assets/imgs/placeholder.jpg"},
-    deposit: 0,
-    description: 'loading...',
-    apart_id: '',
-    images: [],
-    price: 0,
-    prop_id: '',
-    room_type: 'loading...',
-    type: 'loading...',
-    timeStamp: 0
-  }
+  apartment: Apartment;
   myDate: Date = null;
   loading: boolean = false;
-  appointment: Appointment = {
-    booker_id: '',
-    prop_id: '',
-    apart_id: '',
-    date: null,
-    timeStamp: 0,
-    host_id: '',
-    host_confirms: false,
-    host_declines: false,
-    seeker_cancels: false
-  }
-  user: User = {
-      email: '',
-      firstname: '',
-      lastname: '',
-      displayName: '',
-      is_host: false,
-      user_type: 'seeker',
-      uid: '',
-      fcm_token: '',
-      phoneNumber: '',
-      photoURL: '',
-      status: false,
-      threads: {}
-    };
+  appointment: Appointment;
+  user: User;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private datePicker: DatePicker, 
   	private calender: Calendar, private confirmtCtrl: ModalController, private storage: LocalDataProvider,
-    private toast: ToastController, private afs: AngularFirestore, private errHandler: ErrorHandlerProvider){	
+    private toast: ToastController, private afs: AngularFirestore, private errHandler: ErrorHandlerProvider,
+    private object_init: ObjectInitProvider){	
+    this.apartment = this.object_init.initializeApartment();
+    this.appointment = this.object_init.initializeAppointment();
+    this.user = this.object_init.initializeUser();
     this.loading = true;
     this.storage.getApartment().then(data =>{
       this.afs.collection("Apartments").doc<Apartment>(data.apart_id).valueChanges().subscribe(apartment =>{
@@ -94,7 +64,6 @@ export class AppointmentPage {
     let warningModal = this.confirmtCtrl.create(ConfirmationPage, {data: myData})
     warningModal.present();
     warningModal.onDidDismiss(data =>{
-      //This is whwre you persist or cancel the appointment on the database
       if(data == true){
         this.createCalenderEvent();
         this.updateAppointmentVals();
@@ -111,6 +80,15 @@ export class AppointmentPage {
           this.errHandler.handleError(err);
           this.loading = false;
         })
+      }else{
+        this.toast.create({
+                message: "Appointment cancelled",
+                showCloseButton: true,
+                  closeButtonText: 'Ok',
+                  position: 'middle',
+                  cssClass: 'toast_margins full_width'
+        }).present()
+        this.loading = false;
       }
     })
   }

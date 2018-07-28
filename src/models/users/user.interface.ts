@@ -12,4 +12,9 @@ export interface User{
 	status?: boolean;
 	threads?: any;
 	uid: string;
+	dob?: Date;
+	occupation?: string;
+	age?: number;
+	id_no?: string;
+	gender?: string;
 }

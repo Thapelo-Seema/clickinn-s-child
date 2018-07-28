@@ -8,4 +8,6 @@ export interface Appointment{
     host_confirms?: boolean;
     host_declines?: boolean;
     seeker_cancels?: boolean;
+    room_type?: string;
+    address?: string;
 }

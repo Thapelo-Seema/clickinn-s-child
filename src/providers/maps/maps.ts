@@ -266,7 +266,7 @@ addApartmentMarkersWithClickListeners(places: Apartment[], poi: Address, map: an
         });
         line.setMap(map); 
     return places.map(place => {
-    const location = new google.maps.LatLng(place.property.lat, place.property.lng);
+    const location = new google.maps.LatLng(place.property.address.lat, place.property.address.lng);
     const markerOptions: MarkerOptions = 
     {
       position: location, 

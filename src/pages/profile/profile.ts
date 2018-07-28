@@ -1,16 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController} from 'ionic-angular';
 import { LocalDataProvider } from '../../providers/local-data/local-data';
 import { User } from '../../models/users/user.interface';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { ErrorHandlerProvider } from '../../providers/error-handler/error-handler';
 import { EditProfilePage } from '../edit-profile/edit-profile';
-/**
- * Generated class for the ProfilePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { ObjectInitProvider } from '../../providers/object-init/object-init';
 
 @IonicPage()
 @Component({
@@ -23,8 +18,9 @@ export class ProfilePage {
   image: string = "assets/imgs/placeholder.png";
   loading: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: LocalDataProvider,
-  	 private afs: AngularFirestore, private errHandler: ErrorHandlerProvider){
+  constructor(public navCtrl: NavController, private storage: LocalDataProvider,
+  	 private afs: AngularFirestore, private errHandler: ErrorHandlerProvider, private object_init: ObjectInitProvider){
+    this.user = this.object_init.initializeUser();
       this.loading = true;
   		this.storage.getUser().then(data =>{
         this.afs.collection('Users').doc<User>(data.uid).valueChanges().subscribe(user =>{
@@ -42,7 +38,6 @@ export class ProfilePage {
       this.errHandler.handleError(err);
       this.loading = false;
     })
-  	
   }
 
   gotoEdit(){

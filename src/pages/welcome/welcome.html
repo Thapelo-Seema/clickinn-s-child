@@ -17,20 +17,30 @@
     <ion-spinner name="ios"></ion-spinner>
   </div>
 	<div class="centered_on_screen full_width">
-		<h1  style="color: white">Moving closer to school or work {{user ? returnFirst(user?.displayName): ''}}?</h1>
-		<p style="color: white">Enter the name of the institution, organisation or location below</p>
-		<ion-searchbar type="search" [(ngModel)]="pointOfInterest.description" 
-			placeholder="e.g. Wits or liberty life  or  Braamfontein" (ionInput)="getPredictions($event)" mode="ios">
-		</ion-searchbar>
-		<ion-list *ngIf="predictions">
-			<button ion-item *ngFor="let pred of predictions" (click)="selectPlace(pred)">{{pred?.description}}</button>
-		</ion-list>
-    <ion-buttons text-center>
-      <button ion-button margin-vertical padding-horizontal round outline (click)="nextPage()">
-        Next &nbsp;&nbsp;&nbsp;&nbsp;
-          <ion-icon name="arrow-round-forward"></ion-icon>
-      </button>
-    </ion-buttons>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-0 col-sm-0 col-md-0 col-lg-3>
+        </ion-col>
+        <ion-col col-12 col-sm-12 col-md-12 col-lg-6>
+          <h1  style="color: white">Moving closer to school or work {{user ? returnFirst(user?.displayName): ''}}?</h1>
+          <p style="color: white">Enter the name of the institution, organisation or location below</p>
+          <ion-searchbar type="search" [(ngModel)]="pointOfInterest.description" 
+            placeholder="e.g. Wits or liberty life  or  Braamfontein" (ionInput)="getPredictions($event)" mode="ios">
+          </ion-searchbar>
+          <ion-list *ngIf="predictions">
+            <button ion-item *ngFor="let pred of predictions" (click)="selectPlace(pred)">{{pred?.description}}</button>
+          </ion-list>
+          <ion-buttons text-center>
+            <button ion-button margin-vertical padding-horizontal round outline (click)="nextPage()">
+              Next &nbsp;&nbsp;&nbsp;&nbsp;
+                <ion-icon name="arrow-round-forward"></ion-icon>
+            </button>
+          </ion-buttons>
+        </ion-col>
+        <ion-col col-0 col-sm-0 col-md-0 col-lg-3>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 	</div>
 </ion-content>
 

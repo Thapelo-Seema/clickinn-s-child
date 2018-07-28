@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, AlertController } from 'ionic-angular';
 import { Address } from '../../models/location/address.interface';
 import { Apartment } from '../../models/properties/apartment.interface';
 import { AccommodationsProvider } from '../../providers/accommodations/accommodations';
@@ -9,7 +9,7 @@ import { ErrorHandlerProvider } from '../../providers/error-handler/error-handle
 import { ClickinnMapsComponent } from '../../components/clickinn-maps/clickinn-maps';
 import { AccommodationsComponent } from '../../components/accommodations/accommodations';
 import { ApartmentDetailsPage } from '../apartment-details/apartment-details';
-
+import { ObjectInitProvider } from '../../providers/object-init/object-init';
 
 @IonicPage()
 @Component({
@@ -28,9 +28,12 @@ export class SeekingPage {
   bestMatch: Apartment ;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private accom_svc: AccommodationsProvider,
+  constructor(public navCtrl: NavController,  private accom_svc: AccommodationsProvider,
    private alertCtrl: AlertController, private storage: LocalDataProvider,
-   private errHandler: ErrorHandlerProvider){ 
+   private errHandler: ErrorHandlerProvider, private object_init: ObjectInitProvider){ 
+    this.pointOfInterest = this.object_init.initializeAddress();
+    this.bestMatch = this.object_init.initializeApartment();
+    this.search_object = this.object_init.initializeSearch();
     this.storage.getPOI().then(data =>{
       this.pointOfInterest = data;
     })

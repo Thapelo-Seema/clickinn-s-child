@@ -24,6 +24,7 @@ import { DocumentViewer } from '@ionic-native/document-viewer';
 import { File } from '@ionic-native/file';
 import { FileTransfer } from '@ionic-native/file-transfer';
 
+
 //import custom pages
 
 import { AlertPageModule } from '../pages/alert/alert.module';
@@ -54,6 +55,8 @@ import { SearchfeedPageModule } from '../pages/searchfeed/searchfeed.module';
 import { ChatsPageModule } from '../pages/chats/chats.module';
 import { ManageBuildingsPageModule } from '../pages/manage-buildings/manage-buildings.module';
 import { ComponentsModule } from '../components/components.module';
+import { SearchfeedProvider } from '../providers/searchfeed/searchfeed';
+import { ObjectInitProvider } from '../providers/object-init/object-init';
 
 
 
@@ -68,7 +71,7 @@ export const firebaseConfig = {
 
 @NgModule({
   declarations: [
-    MyApp, 
+    MyApp,
   ],
   imports: [
     BrowserModule,
@@ -102,7 +105,9 @@ export const firebaseConfig = {
     MapsProvider, 
     AccommodationsProvider,
     LocalDataProvider,
-    ErrorHandlerProvider
+    ErrorHandlerProvider,
+    SearchfeedProvider,
+    ObjectInitProvider
   ]
 })
 export class AppModule {}
