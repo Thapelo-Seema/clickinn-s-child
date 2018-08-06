@@ -13,19 +13,29 @@
 <ion-content padding>
 	<ion-grid class="centered_on_screen">
 		<ion-row>
-			<ion-col col-12 col-sm-12 col-md-6 text-center>
-				<button ion-item full padding text-center style="border-radius: 5px; color: silver;
-				border: 1px solid silver">
-					<ion-icon name="home" style="font-size: 40px"></ion-icon>
-					<h1 text-center>Building list</h1>
-				</button>
+			<ion-col col-0 col-sm-0 col-md-0 col-lg-3>
 			</ion-col>
-			<ion-col col-12 col-sm-12 col-md-6 text-center color="secondary">
-				<button ion-item full padding text-center style="border-radius: 5px; color: silver;
-				border: 1px solid silver">
-					<ion-icon name="ios-cloud-upload" style="font-size: 40px"></ion-icon>
-					<h1 text-center>Upload apartment</h1>
-				</button>
+			<ion-col col-12 col-sm-12 col-md-12 col-lg-6>
+				<ion-grid>
+				<ion-row>
+					<ion-col col-12 col-sm-12 col-md-6 text-center>
+						<button ion-item full padding text-center style="border-radius: 5px; color: silver;
+						border: 1px solid silver">
+							<ion-icon name="home" style="font-size: 40px"></ion-icon>
+							<h1 text-center>Building list</h1>
+						</button>
+					</ion-col>
+					<ion-col col-12 col-sm-12 col-md-6 text-center color="secondary">
+						<button ion-item full padding text-center style="border-radius: 5px; color: silver;
+						border: 1px solid silver" (click)="uploadAndEarn()" >
+							<ion-icon name="ios-cloud-upload" style="font-size: 40px"></ion-icon>
+							<h1 text-center>Upload apartment</h1>
+						</button>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
+			</ion-col>
+			<ion-col col-0 col-sm-0 col-md-0 col-lg-3>
 			</ion-col>
 		</ion-row>
 	</ion-grid>

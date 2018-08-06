@@ -14,7 +14,9 @@ import { MapsProvider } from '../../providers/maps/maps';
 import { Address } from '../../models/location/address.interface';
 import { User } from '../../models/users/user.interface';
 import { LocalDataProvider } from '../../providers/local-data/local-data';
-import { AccommodationsProvider } from '../../providers/accommodations/accommodations'
+import { AccommodationsProvider } from '../../providers/accommodations/accommodations';
+import { ObjectInitProvider } from '../../providers/object-init/object-init';
+import { InfoPage } from '../info/info';
 
 declare var google: any;
 
@@ -36,7 +38,8 @@ export class UploadAndEarnPage{
     prop_id: '',
     room_type: '',
     type: 'loading...',
-    timeStamp: 0
+    timeStamp: 0,
+    occupiedBy: this.object_init.initializeTenant()
   }
   building: Property ={
   	address: null,
@@ -70,9 +73,10 @@ export class UploadAndEarnPage{
   constructor(private alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams,
     private camera: Camera, private errHandler: ErrorHandlerProvider, private platform: Platform,
     private afs: AngularFirestore, private afstorage: AngularFireStorage, private toast: ToastController,
-    private map_svc: MapsProvider, private storage: LocalDataProvider, private accom_svc: AccommodationsProvider){
+    private map_svc: MapsProvider, private storage: LocalDataProvider, private accom_svc: AccommodationsProvider, 
+    private object_init: ObjectInitProvider){
     this.platform.ready().then(val =>{
-      this.storage.getUser().then(user =>{
+      this.storage.getUser().then(user =>{ //getting user from local storage
         this.user = user;
         this.building.user_id = user.uid;
         this.accom_svc.getUsersProperties(user.uid).subscribe(buildings =>{
@@ -83,7 +87,7 @@ export class UploadAndEarnPage{
   }
 
   ionViewDidLoad() {
-    this.showAlert();
+    //this.showAlert();
   }
 
   selectChange(e) {
@@ -155,12 +159,18 @@ export class UploadAndEarnPage{
   uploadApartment(){
     console.log('Uploading apartment...');
     this.loading = true;
+    this.apartment.property = this.building;
     this.uploadBuildingPics();
       this.afs.collection('Apartments').doc(this.apartment.apart_id).update(this.apartment).then(() =>{
         console.log('Updating apartment...');
         this.afs.collection('Properties').doc(this.building.prop_id).update(this.building).then(() =>{
           console.log('Updating building...');
-          this.successful();
+          this.storage.setApartment(this.apartment).then(apart =>{
+            this.successful()
+            setTimeout(() =>{this.navCtrl.push(InfoPage)}, 3000)
+          })
+          .catch(err => console.log(err))
+          
           this.loading = false;
         })
         .catch(err =>{
@@ -175,7 +185,7 @@ export class UploadAndEarnPage{
   }
 
   selectBuilding(property: Property, images: Image[]){
-    this.apartment.property = property;
+    this.apartment.property = property; //adding the building profile to the apartment
     images.forEach(image =>{
       this.apartment.property.images.push(image);
     })
@@ -226,15 +236,20 @@ export class UploadAndEarnPage{
   uploadPics(pics: FileUpload[]): Promise<Image[]>{
     let images: Image[] = [];
     return new Promise<Image[]>((resolve, reject) =>{
-      pics.forEach(pic =>{
-        this.uploadPic(pic).then(image => images.push(image)).catch(err =>{
-          this.errHandler.handleError(err);
-          this.loading = false;
-        });
-        if(images.length == pics.length){
-          resolve(images);
-        }
-      })
+      if(pics){
+          pics.forEach(pic =>{
+          this.uploadPic(pic).then(image => images.push(image)).catch(err =>{
+            this.errHandler.handleError(err);
+            this.loading = false;
+          });
+          if(images.length == pics.length){
+            resolve(images);
+          }
+        })
+      }else{
+        reject('No images selected');
+      }
+      
     })
   }
 

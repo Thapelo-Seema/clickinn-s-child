@@ -13,7 +13,9 @@
 </ion-header>
 
 <ion-content padding>
-	<ion-list>
+		<ion-buttons *ngIf="canEdit">
+			<button ion-button small>edit</button>
+		</ion-buttons>
 		<ion-item text-wrap no-lines>
 			<ion-avatar item-start>
 				<img src="{{apartment?.dP?.url}}" imageViewer/>
@@ -30,9 +32,11 @@
 		<h2 text-center>More info</h2>
 		<ion-item text-wrap>
 			<ion-icon name='walk' color="light-gray" item-start></ion-icon>
-			<h2>Places within a 10 min walk</h2> 
+			<h1>Places within a 10 min walk</h1> 
 			<ion-list>
-				<h4 *ngFor="let place of apartment?.property?.nearbys"> {{place}} </h4>
+				<ion-chip *ngFor="let place of apartment?.property?.nearbys" text-wrap>
+				  <ion-label>{{place}}</ion-label>
+				</ion-chip>
 			</ion-list>
 		</ion-item>
 		<ion-item>
@@ -55,6 +59,5 @@
 			<ion-icon name='checkmark' color="light-gray" item-start></ion-icon>
 			NSFAS status<ion-note item-end>{{apartment?.property?.nsfas ? "Accreditted" : "N/A"}}</ion-note>
 		</ion-item>
-	</ion-list>
 	
 </ion-content>

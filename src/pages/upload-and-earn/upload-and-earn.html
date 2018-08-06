@@ -6,7 +6,7 @@
 -->
 <ion-header>
   <ion-navbar color="clickinn">
-    <ion-title>Upload &amp; Earn</ion-title>
+    <ion-title>Upload</ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content>
@@ -102,7 +102,7 @@
           </ion-input>
         </ion-item>
         <ion-list *ngIf="predictionsNby">
-          <button ion-item *ngFor="let pred of predictionsNby" (click)="addNearby(pred?.description)">{{pred?.description}}</button>
+          <button ion-item *ngFor="let pred of predictionsNby" (click)="addNearby(pred?.name)">{{pred?.description}}</button>
         </ion-list>
         <ion-list *ngIf="building.nearbys">
           <ion-item *ngFor="let nearby of building.nearbys" margin-vertical no-lines style="background: lightgray" 

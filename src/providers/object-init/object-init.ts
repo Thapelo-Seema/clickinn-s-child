@@ -19,9 +19,12 @@ import { AngularFireAuth } from 'angularfire2/auth';
 @Injectable()
 export class ObjectInitProvider {
 
-  uid: string;
+  uid: string = '';
   constructor(private afAuth: AngularFireAuth){
-    this.uid = this.afAuth.auth.currentUser.uid;
+    if(this.afAuth.auth.currentUser){
+        this.uid = this.afAuth.auth.currentUser.uid;
+    }
+    
   }
 
   initializeSearch(): Search{
@@ -36,8 +39,8 @@ export class ObjectInitProvider {
 	    Address: this.initializeAddress(),
 	    timeStamp: 0,
 	    searcher_id: this.uid,
-	    searcher_name: 'not provided',
-	    nearby: 'not provided',
+	    searcher_name: '',
+	    nearby: '',
 	    other: false
 
   	}
@@ -47,28 +50,28 @@ export class ObjectInitProvider {
 
   initializeAddress(): Address{
   	let address: Address = {
-  		administrative_area_level_1_lng: 'not provided',
-  		administrative_area_level_2_lng: 'not provided',
-  		administrative_area_level_1_short: 'not provided',
-  		administrative_area_level_2_short: 'not provided',
-  		country_long: 'not provided',
-  		country_short: 'not provided',
-  		description: 'not provided',
+  		administrative_area_level_1_lng: '',
+  		administrative_area_level_2_lng: '',
+  		administrative_area_level_1_short: '',
+  		administrative_area_level_2_short: '',
+  		country_long: '',
+  		country_short: '',
+  		description: '',
   		lat: 0,
   		lng: 0,
-  		locality_short: 'not provided',
-  		locality_lng: 'not provided',
-  		name: 'not provided',
-  		sublocality_short: 'not provided',
-  		sublocality_lng: 'not provided',
-  		vicinity: 'not provided'
+  		locality_short: '',
+  		locality_lng: '',
+  		name: '',
+  		sublocality_short: '',
+  		sublocality_lng: '',
+  		vicinity: ''
   	}
   	return address;
   }
 
   initializeDuration(): Duration{
   	let duration: Duration ={
-  		text: 'not provided',
+  		text: '',
   		value: 0
   	}
   	return duration;
@@ -86,7 +89,7 @@ export class ObjectInitProvider {
   	let location: Location ={
   		lat: 0,
   		lng: 0,
-  		details: 'not provided'
+  		details: ''
   	}
   	return location;
   }
@@ -96,16 +99,16 @@ export class ObjectInitProvider {
   		available: true,
   		dP: this.initializeImage(),
   		deposit: 0,
-  		description: 'not provided',
-  		apart_id: 'not provided',
+  		description: '',
+  		apart_id: '',
   		images: [this.initializeImage()],
   		occupiedBy: this.initializeTenant(),
   		price: 0,
-  		prop_id: 'not provided',
+  		prop_id: '',
   		property: this.initializeProperty(),
-  		room_type: 'not provided',
+  		room_type: '',
   		search_rating: 0,
-  		type: 'not provided',
+  		type: '',
   		timeStamp: 0
   	}
   	return apartment;
@@ -113,10 +116,10 @@ export class ObjectInitProvider {
 
   initializeImage(): Image{
   	let image: Image = {
-  		name: 'not provided',
-  		path: 'not provided',
+  		name: '',
+  		path: '',
   		progress: 0,
-  		url: 'not provided'
+  		url: ''
   	}
   	return image;
   }
@@ -124,8 +127,8 @@ export class ObjectInitProvider {
   initializeProperty(): Property{
   	let property: Property = {
   		address: this.initializeAddress(),
-  		prop_id: 'not provided',
-  		common: 'not provided',
+  		prop_id: '',
+  		common: '',
   		dP: this.initializeImage(),
   		images: [this.initializeImage()],
   		laundry: false,
@@ -134,7 +137,7 @@ export class ObjectInitProvider {
   		parking: false,
   		prepaid_elec: false,
   		timeStamp: 0,
-  		user_id: 'not provided',
+  		user_id: '',
   		nearbys: ['Clickinn Offices']
   	}
   	return property;
@@ -142,24 +145,24 @@ export class ObjectInitProvider {
 
   initializeUser(): User{
   	let user: User = {
-  		displayName: 'not provided',
-  		firstname: 'not provided',
-  		lastname: 'not provided',
-  		user_type: 'not provided',
-  		email: 'not provided',
-  		fcm_token: 'not provided',
+  		displayName: '',
+  		firstname: '',
+  		lastname: '',
+  		user_type: '',
+  		email: '',
+  		fcm_token: '',
   		is_host: false,
-  		phoneNumber: 'not provided',
-  		photoURL: 'not provided',
+  		phoneNumber: '',
+  		photoURL: '',
   		rating: '1',
   		status: false,
-  		threads: ['not provided'],
+  		threads: [''],
   		uid: this.uid,
-  		occupation: 'not provided',
+  		occupation: '',
   		age: 0,
   		dob: new Date(),
-  		id_no: 'not provided',
-  		gender: 'not provided'
+  		id_no: '',
+  		gender: ''
   	}
   	return user;
   }
@@ -167,13 +170,13 @@ export class ObjectInitProvider {
 
  initializeSeeker(): Seeker{
  	let seeker: Seeker = {
- 		firstname: 'not provided',
- 		lastname: 'not provided',
+ 		firstname: '',
+ 		lastname: '',
  		uid: this.uid,
  		age: 0,
- 		occupation: 'not provided',
- 		cellphone: 'not provided',
- 		email: 'not provided',
+ 		occupation: '',
+ 		cellphone: '',
+ 		email: '',
  		rating: 0
  	}
  	return seeker;
@@ -192,26 +195,26 @@ export class ObjectInitProvider {
  	let appointment: Appointment ={
  		date: new Date(),
  		booker_id: this.uid,
- 		prop_id: 'not provided',
- 		apart_id: 'not provided',
- 		host_id: 'not provided',
+ 		prop_id: '',
+ 		apart_id: '',
+ 		host_id: '',
  		host_confirms: false,
  		host_declines: false,
  		seeker_cancels: false,
  		timeStamp: 0,
- 		address: 'not provided',
- 		room_type: 'not provided'
+ 		address: '',
+ 		room_type: ''
  	}
  	return appointment;
  }
 
  initializeFileUpload(): FileUpload{
  	let fileUpload: FileUpload ={
- 		file: 'not provided',
- 		url: 'not provided',
- 		name: 'not provided',
+ 		file: '',
+ 		url: '',
+ 		name: '',
  		progress: 0,
- 		path: 'not provided'
+ 		path: ''
  	}
  	return fileUpload;
  }
@@ -219,7 +222,7 @@ export class ObjectInitProvider {
  initializeMarkerOptions(): MarkerOptions{
  	let options: MarkerOptions ={
  		position: this.initializeLatLng(),
- 		title: 'not provided',
+ 		title: '',
  		icon: null,
  		label: null,
  		map: null

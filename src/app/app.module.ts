@@ -57,6 +57,7 @@ import { ManageBuildingsPageModule } from '../pages/manage-buildings/manage-buil
 import { ComponentsModule } from '../components/components.module';
 import { SearchfeedProvider } from '../providers/searchfeed/searchfeed';
 import { ObjectInitProvider } from '../providers/object-init/object-init';
+import { AppointmentsProvider } from '../providers/appointments/appointments';
 
 
 
@@ -107,7 +108,8 @@ export const firebaseConfig = {
     LocalDataProvider,
     ErrorHandlerProvider,
     SearchfeedProvider,
-    ObjectInitProvider
+    ObjectInitProvider,
+    AppointmentsProvider
   ]
 })
 export class AppModule {}

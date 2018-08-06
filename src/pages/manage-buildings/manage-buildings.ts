@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ObjectInitProvider } from '../../providers/object-init/object-init';
+import { UploadAndEarnPage } from '../upload-and-earn/upload-and-earn'
 
 /**
  * Generated class for the ManageBuildingsPage page.
@@ -20,7 +21,11 @@ export class ManageBuildingsPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ManageBuildingsPage');
+    
+  }
+
+  uploadAndEarn(){
+    this.navCtrl.push(UploadAndEarnPage);
   }
 
 }

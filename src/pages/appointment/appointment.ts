@@ -97,6 +97,7 @@ export class AppointmentPage {
     this.appointment.prop_id = this.apartment.prop_id;
     this.appointment.apart_id = this.apartment.apart_id;
     this.appointment.booker_id = this.user.uid;
+    this.appointment.booker_name = this.user.displayName ? this.user.displayName : this.user.firstname;
     this.appointment.host_id = this.apartment.property.user_id;
     this.appointment.date = this.myDate;
     this.appointment.timeStamp = Date.now();

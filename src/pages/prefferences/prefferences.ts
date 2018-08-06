@@ -54,7 +54,14 @@ export class PrefferencesPage {
       return;
     }
     this.search_object.searcher_id = this.user.uid;
-    this.search_object.searcher_name = this.user.firstname + ' ' + this.user.lastname;
+    if(this.user.firstname != undefined && this.user.firstname != null){
+      this.search_object.searcher_name = this.user.firstname + ' ' + this.user.lastname;
+    }else if(this.user.displayName != undefined && this.user.displayName != null){
+      this.search_object.searcher_name = this.user.displayName;
+    }else{
+      this.search_object.searcher_name = 'Anonymous';
+    }
+    
     this.search_object.Address = this.pointOfInterest;
     this.search_object.maxPrice = Number(this.search_object.maxPrice);
     this.search_object.minPrice = Number(this.search_object.minPrice);

@@ -9,7 +9,6 @@ import { SignupPage } from '../signup/signup';
 import { WelcomePage } from '../welcome/welcome';
 import { ObjectInitProvider } from '../../providers/object-init/object-init';
 
-
 @IonicPage()
 @Component({
   selector: 'page-login',
